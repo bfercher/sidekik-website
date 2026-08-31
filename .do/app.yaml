@@ -27,6 +27,9 @@ static_sites:
     source_dir: /
     build_command: npm run build
     output_dir: dist
+    # Serves the branded page built from src/pages/404.astro instead of
+    # DigitalOcean's generic error page.
+    error_document: 404.html
     # Vite inlines PUBLIC_* vars into the bundle during `npm run build`, so these
     # must be available at build time. src/components/Analytics.astro renders
     # nothing at all when the key is unset, so a wrong scope here silently drops

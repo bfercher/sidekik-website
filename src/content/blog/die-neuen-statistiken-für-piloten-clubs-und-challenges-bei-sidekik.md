@@ -3,10 +3,10 @@ title: "Die neuen Statistiken für Piloten, Clubs und Challenges bei Sidekik"
 description: "Bessere Übersicht, mehr Vergleichsmöglichkeiten und deutlich mehr Tiefe – für dich persönlich, für deinen Club und für eure Challenges."
 pubDate: 2026-01-23
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_1c093edb45394a54bd4c19f316c2a956~mv2.jpg"
+image: "../../assets/blog/statistiken.jpg"
 ---
 
-<!-- Original featured image: https://static.wixstatic.com/media/c981b3_1c093edb45394a54bd4c19f316c2a956~mv2.jpg — re-upload manually. Reading time on original: 2 Min. Lesezeit -->
+<!-- Original featured image: src/assets/blog/statistiken.jpg. Reading time on original: 2 Min. Lesezeit -->
 
 Wer fliegt, sammelt Daten. Und wer sich weiterentwickeln will, schaut genauer hin.
 

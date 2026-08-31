@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import entfernungsanzeige from '../assets/pages/entfernungsanzeige.png';
 ---
 
 <Layout
@@ -77,6 +79,14 @@ import Layout from '../layouts/Layout.astro';
       hoch aufdrehen oder an einem anderen Tag mit besseren Bedingungen versuchen. Die
       Bonuspunkte laufen nicht davon :-).
     </p>
+    <Image
+      src={entfernungsanzeige}
+      alt="Sidekik Entfernungsanzeige zum Peak-Mittelpunkt für Proximity-Bonuspunkte"
+      loading="lazy"
+      class="section-img"
+      width={720}
+      densities={[1, 2]}
+    />
 
     <h3>Bonuspunkte durch "Peak-Serie"</h3>
     <p>
@@ -158,4 +168,5 @@ import Layout from '../layouts/Layout.astro';
   .hero h1 { font-size: 2rem; }
   .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 680px; }
   .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
+  .section-img { max-width: 280px; border-radius: 12px; margin-top: 1rem; }
 </style>

@@ -1,5 +1,36 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import heroShot from '../assets/pages/app-screenshots-hero.png';
+import { APP, SITE_URL, ratingValueLocalized } from '../lib/seo';
+
+const rating = ratingValueLocalized();
+
+// Each store publishes one decimal on its listing; the extra precision we keep
+// in seo.ts is only there so the weighted combined value is accurate.
+const storeRating = (value: string) => Number(value).toFixed(1).replace('.', ',');
+
+// Declared on the homepage rather than sitewide because this is the page that
+// visibly shows the rating, which is a condition for the rating markup.
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: APP.name,
+  url: SITE_URL,
+  applicationCategory: 'SportsApplication',
+  operatingSystem: 'iOS, Android',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'EUR',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: APP.ratingValue,
+    bestRating: '5',
+    ratingCount: APP.ratingCount,
+  },
+};
 ---
 
 <Layout
@@ -7,6 +38,7 @@ import Layout from '../layouts/Layout.astro';
   description="Tracke deine Hike&Fly- und XC-Abenteuer, setze und erreiche deine fliegerischen Ziele – gemeinsam mit deinen Freunden und Clubkollegen."
   lang="de"
   path="/"
+  jsonLd={appSchema}
 >
   <section class="hero">
     <h1>Bring dein Gleitschirmfliegen aufs nächste Level.</h1>
@@ -15,7 +47,16 @@ import Layout from '../layouts/Layout.astro';
       gemeinsam mit deinen Freunden und Clubkollegen.
     </p>
     <p><a class="cta-button" href="https://app.sidekik.cloud/signup">Lade die kostenlose Sidekik App herunter</a></p>
-    <p class="rating">⭐ 4.8 Rating, Join thousands of Pilots</p>
+    <p class="rating">⭐ {rating} von 5 aus {APP.ratingCount} Bewertungen, Join thousands of Pilots</p>
+    <Image
+      src={heroShot}
+      alt="Sidekik App Screenshots: Feed, Peak-Tracking, Ranking, Fortschritt und Club-Profil"
+      class="hero-shot"
+      width={960}
+      densities={[1, 2]}
+      loading="eager"
+      fetchpriority="high"
+    />
   </section>
 
   <section class="testimonials">
@@ -34,8 +75,13 @@ import Layout from '../layouts/Layout.astro';
   </section>
 
   <section class="ratings-strip">
-    <p>Rating auf Apple App Store &nbsp;·&nbsp; Rating auf Google Play Store</p>
-    <p class="big-rating">4,8</p>
+    <p>
+      Apple App Store {storeRating(APP.stores.apple.ratingValue)} ({APP.stores.apple.ratingCount})
+      &nbsp;·&nbsp;
+      Google Play {storeRating(APP.stores.google.ratingValue)} ({APP.stores.google.ratingCount})
+    </p>
+    <p class="big-rating">{rating}</p>
+    <p class="rating-count">Gesamt aus {APP.ratingCount} Bewertungen</p>
   </section>
 
   <section class="why">
@@ -123,7 +169,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="cta-section">
     <h2>Starte dein Abenteuer!</h2>
     <p>Lade die kostenlose Sidekik App herunter</p>
-    <p class="rating">⭐ 4.8 Rating, Join 2500+ Pilots</p>
+    <p class="rating">⭐ {rating} von 5 aus {APP.ratingCount} Bewertungen, Join 2500+ Pilots</p>
     <p><a class="cta-button" href="https://app.sidekik.cloud/signup">App herunterladen</a></p>
   </section>
 </Layout>
@@ -146,6 +192,12 @@ import Layout from '../layouts/Layout.astro';
     color: var(--color-muted);
     font-size: 0.9rem;
   }
+  .hero-shot {
+    display: block;
+    max-width: 100%;
+    margin-top: 2rem;
+    border-radius: 16px;
+  }
   .testimonials {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -156,6 +208,11 @@ import Layout from '../layouts/Layout.astro';
     background: var(--color-surface);
     border-radius: 12px;
     padding: 1.5rem;
+  }
+  .rating-count {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    margin: 0.25rem 0 0;
   }
   .big-rating {
     font-size: 2.5rem;

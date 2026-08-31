@@ -3,10 +3,10 @@ title: "Neue Berechnung von XP"
 description: "Ab 1. Januar 2026 gilt ein vereinfachtes XP-System: kein Upload-Bonus mehr, reduzierte Hike-Punkte, alle Aktivitäten rückwirkend neu berechnet."
 pubDate: 2026-01-23
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_e8502698074744b7bc7666531802c060~mv2.jpg"
+image: "../../assets/blog/xp-berechnung.jpg"
 ---
 
-<!-- Published 23. Jan. 2026. Featured image: https://static.wixstatic.com/media/c981b3_e8502698074744b7bc7666531802c060~mv2.jpg — re-upload manually. -->
+<!-- Published 23. Jan. 2026. Featured image: src/assets/blog/xp-berechnung.jpg. -->
 
 Mit 1.1.2026 startet eine vereinfachte Berechnung der XP für alle Aktivitäten.
 

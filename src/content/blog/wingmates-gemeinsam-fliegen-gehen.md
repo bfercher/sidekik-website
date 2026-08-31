@@ -3,10 +3,10 @@ title: "Wingmates - Gemeinsam fliegen gehen."
 description: "Mit dem neuen Wingmates-Feature siehst du in Sidekik, wer an den nächsten Tagen fliegen geht - ganz ohne Gruppenchat oder endlose Abstimmungen."
 pubDate: 2025-10-31
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_db94cf7d37b54de4be27f0dc8d8c7ad9~mv2.jpg"
+image: "../../assets/blog/wingmates.jpg"
 ---
 
-<!-- Featured image: https://static.wixstatic.com/media/c981b3_db94cf7d37b54de4be27f0dc8d8c7ad9~mv2.jpg — re-upload manually. Reading time: 2 Min. Lesezeit. -->
+<!-- Featured image: src/assets/blog/wingmates.jpg. Reading time: 2 Min. Lesezeit. -->
 
 Manche gehen gerne alleine fliegen – um abzuschalten und die die Ruhe zu genießen.
 

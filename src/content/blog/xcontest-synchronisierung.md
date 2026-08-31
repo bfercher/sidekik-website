@@ -3,10 +3,10 @@ title: "Automatischer XContest Import für Sidekik"
 description: "Durch den automatischen Import von Flügen von XContest sparst du Zeit und Mühe: Sidekik-Gruppe beitreten, UUID hinterlegen, automatische Synchronisierung."
 pubDate: 2024-08-13
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_b24a03c1a197403fab7c77bbaae093dc~mv2.jpg"
+image: "../../assets/blog/xcontest-sync.jpg"
 ---
 
-<!-- Published 13. Aug. 2024, updated 15. Sept. 2025. Featured image: https://static.wixstatic.com/media/c981b3_b24a03c1a197403fab7c77bbaae093dc~mv2.jpg — re-upload manually. -->
+<!-- Published 13. Aug. 2024, updated 15. Sept. 2025. Featured image: src/assets/blog/xcontest-sync.jpg. -->
 
 Durch den automatischen Import von Flügen von XContest zu Sidekik sparst du Zeit und Mühe! In diesem Blogpost erfährst du, wie du dieses Feature nutzen kannst und welche Vorteile es dir bietet.
 

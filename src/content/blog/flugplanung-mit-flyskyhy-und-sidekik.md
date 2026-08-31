@@ -3,10 +3,9 @@ title: "Flugplanung mit FlySkyHy und Sidekik"
 description: "Ein Leitfaden für die Flugplanung mit FlySkyHy und Sidekik: App einrichten, Wegpunkte importieren, Route erstellen und sicher fliegen."
 pubDate: 2024-08-02
 lang: de
-image: ""
 ---
 
-<!-- Published 2. Aug. 2024, updated 15. Sept. 2025. Featured image was a paraglider-in-flight photo from Wix static media — re-upload manually. -->
+<!-- Published 2. Aug. 2024, updated 15. Sept. 2025. Featured image was a paraglider-in-flight photo from Wix static media. -->
 
 Für Paragleiter-Piloten ist die richtige Flugplanung unerlässlich, um einen sicheren und erfolgreichen Flug zu erleben. FlySkyHy ist wahrscheinlich eine der besten Flug-Apps für iOS, die speziell für Gleitschirm- und Drachenflieger entwickelt wurde. Mit ihrer Hilfe kannst du Routen erstellen, Wegpunkte importieren und deinen Flug erfolgreich durchführen. Diese Anleitung zeigt dir Schritt für Schritt, wie du FlySkyHy optimal nutzt, um deine ideale Flugroute zu planen und abzufliegen.
 

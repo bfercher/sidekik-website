@@ -3,10 +3,10 @@ title: "Tracking Reloaded"
 description: "Neues Design für den Sidekik Flug-Tracker: farbige Flugspur, Auto-Zoom und Live Tracking [BETA]."
 pubDate: 2026-03-03
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_d70e2c61e2724b579bb5e97f1376e188~mv2.jpg"
+image: "../../assets/blog/tracking-reloaded.jpg"
 ---
 
-<!-- Published 3. März 2026, updated 4. März 2026. Featured image: https://static.wixstatic.com/media/c981b3_d70e2c61e2724b579bb5e97f1376e188~mv2.jpg — re-upload manually. -->
+<!-- Published 3. März 2026, updated 4. März 2026. Featured image: src/assets/blog/tracking-reloaded.jpg. -->
 
 Gleitschirmfliegen ist für viele von uns mehr als nur ein Sport. Es geht um gemeinsame Erlebnisse, um Motivation in der Gruppe und darum, die eigenen Flüge mit anderen zu teilen.
 

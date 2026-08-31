@@ -3,10 +3,11 @@ title: "Sidekik Gipfelchallenge 2025 - Neue Regeln, intelligente Flugauswertung,
 description: "Ein überarbeitetes Punktesystem für die Peak Hunt Challenges 2025: neue Waypoint-Typen, Schwierigkeitsstufen, Bonuspunkte und offene Challenges."
 pubDate: 2024-10-24
 lang: de
-image: ""
+image: "../../assets/blog/sidekik-2025-regeln.png"
+imageAlt: "Sidekik Gipfelchallenge 2025"
 ---
 
-<!-- Published 24. Okt. 2024, updated 15. Sept. 2025. Featured image was a promotional graphic — re-upload manually. -->
+<!-- Published 24. Okt. 2024, updated 15. Sept. 2025. Featured image was a promotional graphic. -->
 
 Die letzten Monate waren voller wertvoller Erkenntnisse. Wir testeten verschiedene Konzepte und Punktesysteme um herauszufinden welche Ansätze der Gipfelchallenge gut funktionieren und welche weniger. Vor allem aber: Was motiviert Piloten dazu, noch mehr außergewöhnliche Gleitschirmflüge und Hike&Fly-Abenteuer zu erleben – Erlebnisse, die ohne Sidekik vielleicht nie stattgefunden hätten?
 

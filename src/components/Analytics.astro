@@ -109,11 +109,30 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
     what makes it safe to render unconditionally. Note: passing `define:vars` here
     would force the script inline and unbundled, reintroducing the same failure. */}
 <script>
-  import posthog from 'posthog-js';
-
   const CONSENT_KEY = 'sidekik_cookie_consent'; // 'granted' | 'denied'
 
-  function init() {
+  let posthogPromise: Promise<typeof import('posthog-js').default> | undefined;
+
+  /**
+   * posthog-js is ~260 KB, so it is behind a dynamic import: nothing is fetched
+   * until the visitor has actually consented. That keeps it off the critical
+   * path for first-time and opted-out visitors, and means a visitor who declines
+   * never has the library — or its cookies — loaded at all, rather than loading
+   * it and opting out afterwards.
+   */
+  function loadPosthog(key: string, host: string | undefined) {
+    posthogPromise ??= import('posthog-js').then(({ default: posthog }) => {
+      posthog.init(key, {
+        api_host: host,
+        capture_pageview: false,
+        persistence: 'localStorage+cookie',
+      });
+      return posthog;
+    });
+    return posthogPromise;
+  }
+
+  async function init() {
     const banner = document.getElementById('cookie-consent-banner');
     if (!banner) return;
 
@@ -121,34 +140,23 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
     const host = banner.dataset.posthogHost;
     if (!key) return;
 
-    posthog.init(key, {
-      api_host: host,
-      // Nothing is captured until the visitor explicitly consents.
-      opt_out_capturing_by_default: true,
-      capture_pageview: false,
-      persistence: 'localStorage+cookie',
-    });
-
     const stored = localStorage.getItem(CONSENT_KEY);
     if (stored === 'granted') {
-      posthog.opt_in_capturing();
+      const posthog = await loadPosthog(key, host);
       posthog.capture('$pageview');
-    } else if (stored === 'denied') {
-      posthog.opt_out_capturing();
-    } else {
+    } else if (stored !== 'denied') {
       banner.hidden = false;
     }
 
-    document.getElementById('cookie-consent-accept')?.addEventListener('click', () => {
+    document.getElementById('cookie-consent-accept')?.addEventListener('click', async () => {
       localStorage.setItem(CONSENT_KEY, 'granted');
-      posthog.opt_in_capturing();
-      posthog.capture('$pageview');
       banner.hidden = true;
+      const posthog = await loadPosthog(key, host);
+      posthog.capture('$pageview');
     });
 
     document.getElementById('cookie-consent-decline')?.addEventListener('click', () => {
       localStorage.setItem(CONSENT_KEY, 'denied');
-      posthog.opt_out_capturing();
       banner.hidden = true;
     });
   }

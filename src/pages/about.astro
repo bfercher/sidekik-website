@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import bernhard from '../assets/pages/bernhard.jpg';
 ---
 
 <Layout
@@ -44,10 +46,12 @@ import Layout from '../layouts/Layout.astro';
 
   <section class="origin">
     <h2>Alles hat einen Anfang</h2>
-    <img
-      src="https://static.wixstatic.com/media/c981b3_5bcdd640e4624e5298a5db05ef630146~mv2.jpg"
+    <Image
+      src={bernhard}
       alt="Bernhard, Gründer von Sidekik"
       loading="lazy"
+      width={720}
+      densities={[1, 2]}
     />
     <p>
       Die Idee entstand im Stubaital am Landeplatz. Mitglieder der "Stubaier Jochdohlen"

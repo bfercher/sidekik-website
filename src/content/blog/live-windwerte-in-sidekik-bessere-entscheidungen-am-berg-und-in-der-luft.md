@@ -3,10 +3,11 @@ title: "Live-Windwerte in Sidekik: Bessere Entscheidungen am Berg und in der Luf
 description: "Live-Winddaten direkt in der Sidekik Tracking-Karte: Richtungspfeile, farbcodierte Kreise und Stationen in Österreich via GeoSphere."
 pubDate: 2025-12-29
 lang: de
-image: ""
+image: "../../assets/blog/live-windwerte.png"
+imageAlt: "Live-Windwerte mit Richtungspfeilen und farbigen Kreisen in der Sidekik Karte"
 ---
 
-<!-- Published 29. Dez. 2025. Featured image was a screenshot of live wind measurement values in the app — re-upload manually. -->
+<!-- Published 29. Dez. 2025. Featured image was a screenshot of live wind measurement values in the app. -->
 
 Wind ist einer der entscheidendsten Faktoren beim Gleitschirmfliegen und Hike & Fly. Er beeinflusst Startentscheidungen, Routenwahl, Thermiknutzung und nicht zuletzt die Sicherheit. Mit dem neuesten Update zeigt Sidekik Live-Windwerte direkt in der Karte an – so hast du die aktuellen Bedingungen rund um deinen Standort jederzeit im Blick.
 

@@ -3,10 +3,11 @@ title: "Hike&Fly Import von Garmin Connect"
 description: "Das Teilen deiner Hike&Fly-Aktivitäten, die du mit deiner Garmin-Uhr aufgezeichnet hast, ist jetzt noch einfacher – dank des neuen Garmin Connect-Imports."
 pubDate: 2025-10-24
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_96e95c1d3598485581cd39c5cb8ca91b~mv2.jpg"
+image: "../../assets/blog/garmin-import.jpg"
+imageAlt: "Garmin Connect Import in Sidekik"
 ---
 
-<!-- Featured image: https://static.wixstatic.com/media/c981b3_96e95c1d3598485581cd39c5cb8ca91b~mv2.jpg — re-upload manually. Reading time: 1 Min. Lesezeit. -->
+<!-- Featured image: src/assets/blog/garmin-connect-import.jpg. Reading time: 1 Min. Lesezeit. -->
 
 Das Teilen deiner **Hike&Fly-Aktivitäten**, die du mit deiner **Garmin-Uhr** aufgezeichnet hast, ist jetzt noch einfacher – dank des neuen **Garmin Connect-Imports**.
 

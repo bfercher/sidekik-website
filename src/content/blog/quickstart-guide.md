@@ -3,10 +3,9 @@ title: "Quickstart Guide"
 description: "In sieben Schritten zum Einstieg bei Sidekik: Account erstellen, Navigation, Challenges beitreten, Wegpunkte exportieren, Flüge einreichen und mehr."
 pubDate: 2024-08-27
 lang: de
-image: ""
 ---
 
-<!-- Published 27. Aug. 2024, updated 15. Sept. 2025. Featured image was a smartphone interface screenshot — re-upload manually. -->
+<!-- Published 27. Aug. 2024, updated 15. Sept. 2025. Featured image was a smartphone interface screenshot. -->
 
 Aller Anfang ist NICHT schwer. Lerne, wie du in wenigen Schritten bei deiner ersten Challenge teilnimmst.
 

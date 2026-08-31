@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import sharing from '../assets/pages/sharing.jpg';
 ---
 
 <Layout
@@ -34,6 +36,14 @@ import Layout from '../layouts/Layout.astro';
       <li>Hochladen von Fotos</li>
     </ul>
     <p class="muted">Partner: Garmin, Suunto</p>
+    <Image
+      src={sharing}
+      alt="Teile deine Flüge und Hike&Fly-Abenteuer in Sidekik"
+      loading="lazy"
+      class="section-img"
+      width={720}
+      densities={[1, 2]}
+    />
   </section>
 
   <section>
@@ -101,4 +111,5 @@ import Layout from '../layouts/Layout.astro';
   .muted { color: var(--color-muted); font-size: 0.9rem; }
   .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
   .rating { color: var(--color-muted); font-size: 0.9rem; }
+  .section-img { max-width: 480px; border-radius: 12px; margin-top: 1rem; }
 </style>

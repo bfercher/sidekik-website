@@ -3,10 +3,10 @@ title: "Livewind by BreezeDude.de: Tausende neue Windstationen in Sidekik"
 description: "Sidekik integriert die Windstationsdatenbank von BreezeDude.de - tausende neue Windmessstationen aus Deutschland, der Schweiz und Italien."
 pubDate: 2026-06-06
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_18c0f1ca4eb44adb9159f5fb050533dd~mv2.jpg"
+image: "../../assets/blog/livewind.jpg"
 ---
 
-<!-- Published 6. Juni 2026. Featured image: https://static.wixstatic.com/media/c981b3_18c0f1ca4eb44adb9159f5fb050533dd~mv2.jpg — re-upload manually. -->
+<!-- Published 6. Juni 2026. Featured image: src/assets/blog/livewind.jpg. -->
 
 Gute Flugentscheidungen beginnen mit guten Winddaten. Deshalb erweitern wir Sidekik ab sofort um die umfangreiche Livewind-Datenbasis von BreezeDude.de.
 

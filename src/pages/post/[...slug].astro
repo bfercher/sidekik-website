@@ -1,6 +1,8 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import { ORGANIZATION, absoluteUrl } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -23,9 +25,53 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'de-DE',
   month: 'long',
   day: 'numeric',
 });
+
+const postUrl = absoluteUrl(`/post/${post.id}`);
+
+// The article body is 720px wide; capping at the source width avoids upscaling
+// the few small images (one is only 300px across).
+const bodyWidth = image ? Math.min(720, image.width) : 0;
+
+// Social crawlers are inconsistent about WebP, so the preview is forced to JPEG.
+const socialSource = image
+  ? await getImage({
+      src: image,
+      width: Math.min(1200, image.width),
+      format: 'jpeg',
+    })
+  : undefined;
+const socialImage = socialSource
+  ? {
+      src: socialSource.src,
+      width: Math.min(1200, image!.width),
+      height: Math.round((image!.height / image!.width) * Math.min(1200, image!.width)),
+    }
+  : undefined;
+
+const postSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  inLanguage: lang,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+  author: { '@type': 'Person', name: author },
+  publisher: { '@type': 'Organization', name: ORGANIZATION.name },
+  ...(pubDate ? { datePublished: pubDate.toISOString() } : {}),
+  ...(socialImage ? { image: absoluteUrl(socialImage.src) } : {}),
+};
 ---
 
-<Layout title={`${title} | Sidekik Blog`} description={description} lang={lang} path={`/post/${post.id}`}>
+<Layout
+  title={`${title} | Sidekik Blog`}
+  description={description}
+  lang={lang}
+  path={`/post/${post.id}`}
+  ogType="article"
+  publishedTime={pubDate}
+  jsonLd={postSchema}
+  ogImage={socialImage}
+>
   <article class="post">
     {flagged && (
       <p class="flag-banner">
@@ -40,7 +86,9 @@ const dateFormatter = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'de-DE',
       {author && <span>{author}</span>}
     </p>
     <h1>{title}</h1>
-    {image && <img src={image} alt={imageAlt ?? title} loading="lazy" />}
+    {image && (
+      <Image src={image} alt={imageAlt ?? title} width={bodyWidth} densities={[1, 2]} />
+    )}
     <div class="post-body">
       <Content />
     </div>

@@ -3,11 +3,11 @@ title: "Sidekik jetzt als mobile App für iOS und Android verfügbar – mit spa
 description: "Sidekik als mobile App: neues Follower-System, Privatsphäre-Einstellungen, Benachrichtigungszentrum und Fokus auf die App."
 pubDate: 2025-01-25
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_2e753642b02f4d908b7cb92d66c5214f~mv2.png"
+image: "../../assets/blog/sidekik-screenshots.png"
 imageAlt: "Sidekik App Screenshots"
 ---
 
-<!-- Published 25. Jan. 2025, updated 15. Sept. 2025. Featured image: https://static.wixstatic.com/media/c981b3_2e753642b02f4d908b7cb92d66c5214f~mv2.png — re-upload manually. -->
+<!-- Published 25. Jan. 2025, updated 15. Sept. 2025. Featured image: src/assets/blog/mobile-app-launch.png. -->
 
 Endlich ist die Sidekik App für iOS und Android verfügbar. Mit dem Release bringen wir einige spannende Neuerungen:
 

@@ -3,10 +3,9 @@ title: "Hike&Fly Tracking [BETA] - Gleitschirm Flug-Tracking direkt in Sidekik A
 description: "Der Beta-Launch des Hike&Fly Trackings direkt in der Sidekik App: Challenge-Peaks, Hindernis-Anzeige, Thermikkarte, Lufträume und XC-Strecke."
 pubDate: 2025-04-15
 lang: de
-image: ""
 ---
 
-<!-- Featured image alt/description not captured; original page had a hero image — re-upload manually. Reading time: 2 Min. Lesezeit. Updated 15. Sept. 2025 on original site. -->
+<!-- Featured image alt/description not captured; original page had a hero image. Reading time: 2 Min. Lesezeit. Updated 15. Sept. 2025 on original site. -->
 
 "Sidekick" ist ein anderes Wort für "Wingman". Sidekik ist da, um dich bei deinen Gleitschirmabenteuern zu supporten, zu motivieren und zu leiten. Dieser Vision kommen wir heute ein ganzes Stück näher - mit dem Beta-Launch des **Hike&Fly Tracking** - direkt in der App.
 
@@ -21,6 +20,8 @@ Die Challenge-Wegpunkte (Peaks) sind direkt in der Karte sichtbar – samt Radiu
 ### Hindernis-Anzeige in der Map
 
 Sicherheit geht vor: In der neuen Map zeigen wir dir potenzielle Hindernisse wie Stromleitungen oder Seilbahnen an. So kannst du deine Route besser planen und auch im Flug mit einem Blick checken, was vor dir liegt. (Datenquelle: https://airspace.xcontest.org/)
+
+![Hindernis-Anzeige mit Stromleitungen und Seilbahnen in der Sidekik Tracking-Karte](../../assets/blog/hindernisse.png)
 
 ### Sehen, wo's (wahrscheinlich) rauf geht
 

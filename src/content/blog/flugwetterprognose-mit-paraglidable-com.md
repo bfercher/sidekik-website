@@ -3,10 +3,11 @@ title: "Flugwetterprognose mit paraglidable.com"
 description: "Wie du die KI-basierte Fliegbarkeits- und XC-Potenzial-Prognose von paraglidable.com direkt in die Sidekik App integrierst."
 pubDate: 2025-10-27
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_5db2ae5370654cc08279ed75a908e24b~mv2.jpg"
+image: "../../assets/blog/paraglidable.jpg"
+imageAlt: "Flugwetterprognose mit paraglidable.com in Sidekik"
 ---
 
-<!-- Featured image: https://static.wixstatic.com/media/c981b3_5db2ae5370654cc08279ed75a908e24b~mv2.jpg — re-upload manually. Reading time: 2 Min. Lesezeit. -->
+<!-- Featured image: src/assets/blog/paraglidable.jpg. Reading time: 2 Min. Lesezeit. -->
 
 Häufig will man einfach nur wissen, ob's heute oder in den nächsten Tagen fliegt – und ob es sich überhaupt lohnt, sich tiefer mit dem Flugwetter auseinanderzusetzen. Genau dabei hilft die einfache, schnelle Übersicht von **paraglidable.com**.
 

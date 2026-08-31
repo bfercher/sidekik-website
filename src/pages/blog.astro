@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 
 const posts = await getCollection('blog');
@@ -27,7 +28,15 @@ const dateFormatter = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month:
   <section class="blog-grid">
     {sorted.map((post) => (
       <a class="card" href={`/post/${post.id}`}>
-        {post.data.image && <img src={post.data.image} alt={post.data.imageAlt ?? post.data.title} loading="lazy" />}
+        {post.data.image && (
+          <Image
+            src={post.data.image}
+            alt={post.data.imageAlt ?? post.data.title}
+            width={Math.min(400, post.data.image.width)}
+            densities={[1, 2]}
+            loading="lazy"
+          />
+        )}
         <div class="card-body">
           <h2>{post.data.title}</h2>
           {post.data.pubDate && (

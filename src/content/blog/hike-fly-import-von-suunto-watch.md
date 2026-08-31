@@ -3,10 +3,10 @@ title: "Hike&Fly Import von Suunto Watch"
 description: "Das Teilen deiner Hike&Fly-Aktivitäten, die du mit deiner Suunto Watch aufgezeichnet hast, ist jetzt noch einfacher – dank des neuen Suunto Imports."
 pubDate: 2025-10-27
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_fcdb24b3f84844ee958d0caeb4d8b682~mv2.jpg"
+image: "../../assets/blog/suunto-import.jpg"
 ---
 
-<!-- Featured image: https://static.wixstatic.com/media/c981b3_fcdb24b3f84844ee958d0caeb4d8b682~mv2.jpg — re-upload manually. Reading time: 1 Min. Lesezeit. Updated 29. Okt. 2025. -->
+<!-- Featured image: src/assets/blog/suunto-import.jpg. Reading time: 1 Min. Lesezeit. Updated 29. Okt. 2025. -->
 
 Das Teilen deiner **Hike&Fly-Aktivitäten**, die du mit deiner **Suunto Watch** aufgezeichnet hast, ist jetzt noch einfacher – dank des neuen **Suunto Imports**.
 

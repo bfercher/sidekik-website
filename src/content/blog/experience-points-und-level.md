@@ -3,11 +3,11 @@ title: "Experience Points und Level"
 description: "Das neue XP- und Level-System: Erfahrungspunkte für jede Minute draußen, 11 Level-Stufen, Club-Ranking und Damenwertung."
 pubDate: 2025-03-31
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_4f2343dcfdac4ce981b34b7ee99c3c0d~mv2.png"
+image: "../../assets/blog/experience-points-level.png"
 imageAlt: "Sidekik XP System Screenshots"
 ---
 
-<!-- Featured image: https://static.wixstatic.com/media/c981b3_4f2343dcfdac4ce981b34b7ee99c3c0d~mv2.png (alt: Sidekik XP System Screenshots) — re-upload manually. Reading time: 2 Min. Lesezeit. Updated 15. Sept. 2025. -->
+<!-- Featured image: src/assets/blog/experience-points-level.png (alt: Sidekik XP System Screenshots). Reading time: 2 Min. Lesezeit. Updated 15. Sept. 2025. -->
 
 Ab heute wird jede Minute draußen belohnt: Mit unserem neuen XP- und Level-System sammelst du Erfahrungspunkte für alles, was dein Abenteuer ausmacht – vom Hike zum Startplatz bis zur letzten Thermik im Abendlicht.
 

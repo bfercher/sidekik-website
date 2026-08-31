@@ -3,10 +3,11 @@ title: "Ziele setzen, besser fliegen: Warum persönliche Ziele deinen Flug verä
 description: "Warum das Setzen persönlicher Ziele deine Leistung beim Gleitschirmfliegen verbessert - und wie du mit Sidekik Ziele setzt und erreichst."
 pubDate: 2025-08-07
 lang: de
-image: "https://static.wixstatic.com/media/c981b3_dff713aa99434b168f4419d11df0382c~mv2.jpg"
+image: "../../assets/blog/ziele-setzen.jpg"
+imageAlt: "Ziele setzen beim Gleitschirmfliegen"
 ---
 
-<!-- Confirmed as its own real German article (not a translation) — verified verbatim against the live German page. English counterpart: set-goals-fly-better-why-personal-goals-change-your-flight. Published 7. Aug. 2025, updated 15. Sept. 2025. Featured image: https://static.wixstatic.com/media/c981b3_dff713aa99434b168f4419d11df0382c~mv2.jpg — re-upload manually. -->
+<!-- Confirmed as its own real German article (not a translation) — verified verbatim against the live German page. English counterpart: set-goals-fly-better-why-personal-goals-change-your-flight. Published 7. Aug. 2025, updated 15. Sept. 2025. Featured image: src/assets/blog/goals.jpg. -->
 
 Was macht aus einem/einer Gleitschirmpilot/in einen besseren Pilot*in? Bessere Ausrüstung? Mehr Theorie? Vielleicht. Aber oft beginnt der Fortschritt viel simpler: mit einem Ziel.
 
