@@ -101,14 +101,13 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
 )}
 
 {/* This script must stay at the top level of the template. Astro only compiles
-    and bundles <script> tags it finds statically; one nested inside the
-    expression above is emitted as raw HTML, so `import posthog from 'posthog-js'`
-    ends up in a classic script and throws "Cannot use import statement outside a
-    module", killing consent handling and analytics entirely. It reads its config
-    from the banner's data attributes and no-ops when the banner is absent, which
-    is also what makes it safe to render unconditionally. Note: passing
-    `define:vars` here would force the script inline and unbundled, reintroducing
-    the same failure. */}
+    and bundles script tags it finds statically; one nested inside the expression
+    above is emitted as raw HTML, so `import posthog from 'posthog-js'` ends up in
+    a classic script and throws "Cannot use import statement outside a module",
+    killing consent handling and analytics entirely. It reads its config from the
+    banner's data attributes and no-ops when the banner is absent, which is also
+    what makes it safe to render unconditionally. Note: passing `define:vars` here
+    would force the script inline and unbundled, reintroducing the same failure. */}
 <script>
   import posthog from 'posthog-js';
 

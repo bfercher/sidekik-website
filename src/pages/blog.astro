@@ -26,7 +26,7 @@ const dateFormatter = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month:
 
   <section class="blog-grid">
     {sorted.map((post) => (
-      <a class="card" href={`/post/${post.slug}`}>
+      <a class="card" href={`/post/${post.id}`}>
         {post.data.image && <img src={post.data.image} alt={post.data.imageAlt ?? post.data.title} loading="lazy" />}
         <div class="card-body">
           <h2>{post.data.title}</h2>
