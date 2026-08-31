@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Peak Hunt Challenges | Sidekik"
+  description="Regeln und Punktesystem der Sidekik Peak Hunt Challenges: Schwierigkeitsstufen, Bonuspunkte und wie du teilnimmst."
+  lang="de"
+  path="/challenges"
+>
+  <section class="hero">
+    <h1>Peak Hunt Challenges</h1>
+    <p class="lead">
+      Sammle Gipfel und markante Wegpunkte fliegend und zu Fuß, erhalte Punkte und
+      Bonuspunkte und steig auf im Leaderboard.
+    </p>
+  </section>
+
+  <section>
+    <h2>Regeln und Punktesystem</h2>
+
+    <h3>Peaks</h3>
+    <p>
+      Jeder Peak (Wegpunkt) ist mit Koordinaten, einem Radius und einem Typ definiert. Damit
+      ein Peak markiert ist, muss der Flug oder Hike Track den Radius kreuzen.
+    </p>
+
+    <h3>3 Peak Typen</h3>
+    <ul>
+      <li><strong>Hike &amp; Fly (standard)</strong> — Kann entweder zu Fuß, oder in der Luft markiert werden</li>
+      <li><strong>Fly only (Paragleiter Symbol)</strong> — Kann nur im Flug markiert werden. Es wird überprüft, ob sich der Pilot niemals über 20 Sekunden durchgehend unterhalb 10km/h innerhalb des Radius aufhält</li>
+      <li><strong>Hike only (Wanderer Symbol)</strong> — Können nur zu Fuß markiert werden. Es wird überprüft, ob sich der Pilot 20 Sekunden unterhalb 10km/h innerhalb des Radius aufhält</li>
+    </ul>
+    <p>
+      ☝️ Ein Peak muss nicht unbedingt ein Gipfel sein - kann auch ein anderer "Höhepunkt"
+      sein, wie z.B. ein See, ein Bahnhof, eine Almhütte etc..
+    </p>
+
+    <h3>Punktevergabe</h3>
+    <p>Beispiel Punkte von der Pinzgau Challenge</p>
+    <p>Jeder Peak hat einen Schwierigkeitsgrad: "Einfach", "Mittel", "Schwer", "Sehr Schwer"</p>
+    <p>
+      Jeder Peak hat einen vordefinierten Radius zwischen 50m und 1500m. Berührt der Flug-
+      oder Hike-Track den Radius, bekommt man die Punkte.
+    </p>
+    <p>Je nach Schwierigkeit hat der Peak unterschiedlich viele Punkte:</p>
+    <ul>
+      <li>Einfach: 8 Pkt (blau)</li>
+      <li>Mittel: 10 Punkte (rot)</li>
+      <li>Schwer: 12 Punkte (schwarz)</li>
+      <li>Sehr Schwer: 14 Punkte (schwarz mit gelber Schrift)</li>
+    </ul>
+    <p>Die Punkte für den Peak bekommt man nur einmal pro Challenge.</p>
+    <p>
+      Zusätzlich: Pro Flug, pro Kalendertag bekommt man 0,5 Punkte für einen Flug, der
+      mindestens einen Peak berührt (egal ob dieser Peak schon geholt wurde oder nicht)
+    </p>
+
+    <h3>Bonuspunkte durch "Proximity"</h3>
+    <p>
+      Die einfache Erklärung: Je näher du zum Mittelpunkt fliegst, desto mehr Bonuspunkte
+      bekommst du (maximal 2 Pkt).
+    </p>
+    <p>
+      Die genaue Definition und Berechnung: Jeder Peak hat einen vordefinierten Radius. Das
+      Einfliegen in diesen Radius bringt dem Piloten alle Punkte für diesen Peak ein.
+      Zusätzlich können Piloten bis zu 2 Bonuspunkte verdienen, indem sie sich bis zum
+      Zentrum des Peaks nähern. Die Bonuspunkte steigen linear von 0 Punkte bei Eintritt in
+      den Radius, 2 Punkte bei exakten Überfliegen der Koordinaten. Die Bonuspunkte werden
+      auf zwei Kommastellen gerundet. Bonuspunkte können in einem anderen Flug verbessert
+      werden. Ist man zu Fuß dort (starten, oder durchgehen), bekommt man automatisch die 2
+      Bonuspunkte.
+    </p>
+    <p>
+      ☝️ Es sei hier anzumerken (wie wir ja alle wissen), dass das hangnahe Fliegen
+      gefährlich sein kann. Besonders in Gipfelnähe ist oft mit Turbolenzen zu rechnen. Lieber
+      hoch aufdrehen oder an einem anderen Tag mit besseren Bedingungen versuchen. Die
+      Bonuspunkte laufen nicht davon :-).
+    </p>
+
+    <h3>Bonuspunkte durch "Peak-Serie"</h3>
+    <p>
+      Die einfache Erklärung: Je mehr Peaks du an einem Kalendertag sammelst, desto besser
+      für dein Ranking.
+    </p>
+    <p>
+      Die Berechnung: Ab dem zweiten Peak pro Kalendertag (egal ob in einem oder mehreren
+      Flügen) bekommst du 0,5 Bonuspunkte pro zusätzlichen Peak. Das gilt auch für Peaks, die
+      du an anderen Tagen bereits geholt hast.
+    </p>
+    <p>Formel: (Anzahl Peaks - 1) * 0,5</p>
+    <p>Beispiel: 6 Peaks = (6-1) * 0,5 = 2,5 Punkte</p>
+
+    <h3>Ein Beispiel</h3>
+    <p>Hike&amp;Fly mit 3 Peaks (schwarz fliegend, pink zu Fuß)</p>
+    <ul>
+      <li>Flug: 0,5 Punkte für den Flug, weil dieser mindestens einen "Peak" berührt</li>
+      <li>Bonuspunkte Peakserie: 1 Bonuspunkt für Peak-Serie (2 zusätzliche "Peaks")</li>
+      <li>Gesamt: 0,5 (Flug)+9,98+12+11,93 (Peaks)+1 (Serie)=35,41 Pkt.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Wie du einfach teilnehmen kannst</h2>
+    <ol>
+      <li><strong>Sidekik App herunterladen.</strong> Sidekik gibt's für Android und iOS in den jeweiligen Stores.</li>
+      <li><strong>An einer Challenge teilnehmen.</strong> Lies dir die Regeln und Teilnahmebedingungen durch und trete der Challenge bei.</li>
+      <li><strong>Export der Wegpunkte</strong> auf dein GPS-Gerät/Flug-App oder tracke deinen Flug, dein H&amp;F direkt mit der Sidekik App</li>
+      <li><strong>Genieße deine Abenteuer.</strong> Sammle Punkte in dem du die Peaks fliegend oder zu Fuß erreichst - je nach Wegpunke definiert sind.</li>
+      <li><strong>Flug speichern oder hochladen.</strong> Wenn du mit der Sidekik App deinen Flug getrackt hast, dann kannst du ihn direkt online speichern. Du kannst aber auch deine .igc oder .gpx Datei hochladen und mit deinen Freunden teilen.</li>
+      <li><strong>Auswertung ansehen, Leaderboard klettern.</strong> Dein Flug wird automatisch analysiert. Schau dir an welche Peaks du markiert hast und wieviele Punkte du gesammelt hast. Dein aktueller Rang wird direkt im Leaderboard angezeigt.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Allgemeine Regeln</h2>
+    <ul>
+      <li>Alle in dem vordefinierten Zeitraum hochgeladenen Flüge zählen zur Challenge. Die Flüge müssen mindestens bis zum Enddatum 23:59 eingereicht sein.</li>
+      <li>Flüge müssen innerhalb von 2 Wochen eingereicht werden, damit sie für die Wertung gezählt werden.</li>
+      <li>Du kannst dich jederzeit vor oder während des Herausforderungszeitraums registrieren und an der Herausforderung teilnehmen.</li>
+      <li>Unter Umständen darf nur auf vordefinierten Startplätzen gestartet werden (Je nach Challenge).</li>
+      <li>Gelandet werden darf überall.</li>
+      <li>Flüge, die gegen Luftverkehrsgesetze verstoßen, werden von der Challenge disqualifiziert (wird nicht vom System überprüft.).</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Sicherheit und Haftung</h2>
+    <p>
+      Vermeide es, beim Überfliegen eines Gipfels zu nah am Gelände zu fliegen. Halte immer
+      einen sicheren Abstand zum Boden ein.
+    </p>
+    <p>
+      Sei vorsichtig bei starken Thermiken und Turbulenzen in der Nähe von Gipfeln. Wenn die
+      Bedingungen gefährlich sind, versuche nicht, den Gipfel zu markieren. Du kannst es an
+      einem anderen Tag erneut versuchen und trotzdem die vollen Punkte erhalten.
+    </p>
+    <p>
+      Wetterbedingungen: Überprüfe immer die Wetterbedingungen vor dem Flug und vermeide das
+      Fliegen bei unsicheren Bedingungen.
+    </p>
+    <p>Bitte Lufträume und jagdliche Flugverbotszonen beachten.</p>
+    <p>
+      Jeder Pilot ist für sich selber verantwortlich und benötigt eine gültige Fluglizenz.
+      Dies wird vom Plattformbetreiber nicht überprüft.
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>Starte dein Abenteuer!</h2>
+    <p>Lade die kostenlose Sidekik App herunter</p>
+    <p><a class="cta-button" href="https://app.sidekik.cloud/signup">App herunterladen</a></p>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 3rem 0 1rem; }
+  .hero h1 { font-size: 2rem; }
+  .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 680px; }
+  .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
+</style>

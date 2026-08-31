@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="About | Sidekik"
+  description="Unsere Mission ist es, Gleitschirmpiloten zu inspirieren, sich neue Ziele zu setzen, spannende Herausforderungen anzunehmen und ihre Fähigkeiten spielerisch zu verbessern."
+  lang="de"
+  path="/about"
+>
+  <section class="hero">
+    <h1>Über Sidekik</h1>
+    <p class="lead">
+      Unsere Mission ist es, Gleitschirmpiloten zu inspirieren, sich neue Ziele zu setzen,
+      spannende Herausforderungen anzunehmen und ihre Fähigkeiten spielerisch in einem
+      unterstützenden und dynamischen Umfeld zu verbessern.
+    </p>
+  </section>
+
+  <section class="pillars">
+    <div>
+      <h3>Spannende Ziele</h3>
+      <p>Ein Ziel ist der erste Schritt zum Wachstum. Setzt dir eigene persönliche Ziele oder mach bei Club-Challenges mit.</p>
+    </div>
+    <div>
+      <h3>Lebendige Community</h3>
+      <p>Teile deine Abenteuer mit Gleichgesinnten und lerne von anderen in unserer aktiven Community – ganz egal, ob du Neuling oder Profi bist.</p>
+    </div>
+    <div>
+      <h3>Lernen durch Analyse</h3>
+      <p>Entwickle dich kontinuierlich weiter durch Feedback aus der Community, Selbstreflexion, gezielten Zielsetzungen und Fluganalysen.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sidekik</h2>
+    <p class="ipa">[ˈsaɪdˌkɪk]</p>
+    <p>
+      "Sidekick" ist ein anderes Wort für "Wingman". Es spiegelt die Rolle der Plattform als
+      vertrauenswürdiger Begleiter und Unterstützer wider. Sidekik ist da, um dich bei deinen
+      Gleitschirmabenteuern zu supporten, zu motivieren und zu leiten.
+    </p>
+  </section>
+
+  <section class="origin">
+    <h2>Alles hat einen Anfang</h2>
+    <img
+      src="https://static.wixstatic.com/media/c981b3_5bcdd640e4624e5298a5db05ef630146~mv2.jpg"
+      alt="Bernhard, Gründer von Sidekik"
+      loading="lazy"
+    />
+    <p>
+      Die Idee entstand im Stubaital am Landeplatz. Mitglieder der "Stubaier Jochdohlen"
+      schwärmten über ihr soeben erlebtes Gipfel-Sammel-Abenteuer und diskutierten
+      Fehlentscheidungen, brenzlige Momente und Gipfel-Erfolge. Das Konzept haben wir im
+      "Parateam Virgen" übernommen und gleich gemerkt, dass diese Form der Challenge nicht nur
+      die Strecken-cracks begeistert, sondern alle Erfahrungsstufen gleichermaßen einbindet. Es
+      ist eine großartige Herausforderung über eine längeren Zeitraum und bietet enorm viele
+      Möglichkeiten sich als Pilot weiterzuentwickeln.
+    </p>
+    <p>
+      Inspiriert von dieser Begeisterung, habe ich mir mit Sidekik es zur Aufgabe gemacht,
+      dieses Format einem größeren Publikum zugänglich zu machen. Sidekik soll Piloten dazu
+      motivieren, neue Gebiete zu erkunden, Gänsehaut feeling erzeugen, wenn sie über neue
+      Gipfel soaren, gelegentlich ermutigen ihre Komfortzone zu verlassen und diese Abenteuer
+      mit Freunden und Kollegen zu teilen – mit dem Ziel zu lernen und Spaß zu haben.
+    </p>
+    <p class="signature">— Bernhard, Entwickler von Sidekik</p>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 3rem 0 1.5rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 680px; }
+  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .origin img { border-radius: 12px; max-width: 240px; }
+  .ipa { color: var(--color-muted); }
+  .signature { font-style: italic; }
+</style>

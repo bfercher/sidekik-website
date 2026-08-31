@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const posts = await getCollection('blog');
+const sorted = posts.sort((a, b) => {
+  const da = a.data.pubDate ? a.data.pubDate.getTime() : 0;
+  const db = b.data.pubDate ? b.data.pubDate.getTime() : 0;
+  if (da !== db) return db - da;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const dateFormatter = new Intl.DateTimeFormat('de-DE', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Layout
+  title="Blog | Sidekik"
+  description="Guides, Updates und Geschichten. Erfahre Neuigkeiten rund um Sidekik und lerne die Plattform optimal zu nutzen."
+  lang="de"
+  path="/blog"
+>
+  <section class="blog-intro">
+    <h1>Guides, Updates und Geschichten</h1>
+    <p>Erfahre Neuigkeiten rund um Sidekik und lerne die Plattform optimal zu nutzen.</p>
+  </section>
+
+  <section class="blog-grid">
+    {sorted.map((post) => (
+      <a class="card" href={`/post/${post.slug}`}>
+        {post.data.image && <img src={post.data.image} alt={post.data.imageAlt ?? post.data.title} loading="lazy" />}
+        <div class="card-body">
+          <h2>{post.data.title}</h2>
+          {post.data.pubDate && (
+            <p class="card-date">{dateFormatter.format(post.data.pubDate)}</p>
+          )}
+          <p class="card-desc">{post.data.description}</p>
+          {post.data.lang === 'en' && <span class="lang-badge">EN</span>}
+        </div>
+      </a>
+    ))}
+  </section>
+</Layout>
+
+<style>
+  .blog-intro {
+    margin: 2.5rem 0 1rem;
+  }
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 4rem;
+  }
+  .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+  .card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+  .card-body {
+    padding: 1rem 1.1rem 1.25rem;
+    position: relative;
+  }
+  .card-body h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.35rem;
+  }
+  .card-date {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    margin: 0 0 0.5rem;
+  }
+  .card-desc {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    margin: 0;
+  }
+  .lang-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1.1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.35rem;
+    color: var(--color-muted);
+  }
+</style>

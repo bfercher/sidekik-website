@@ -1,0 +1,83 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, description, pubDate, lang, author, image, imageAlt, flagged } = post.data;
+
+const dateFormatter = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'de-DE', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout title={`${title} | Sidekik Blog`} description={description} lang={lang} path={`/post/${post.slug}`}>
+  <article class="post">
+    {flagged && (
+      <p class="flag-banner">
+        ⚠️ This post is flagged for manual review — the automated extraction from the original
+        Wix page may not be fully verbatim. Please compare against the live site before treating
+        this as final.
+      </p>
+    )}
+    <p class="post-meta">
+      {pubDate && <time datetime={pubDate.toISOString()}>{dateFormatter.format(pubDate)}</time>}
+      {pubDate && author && <span> · </span>}
+      {author && <span>{author}</span>}
+    </p>
+    <h1>{title}</h1>
+    {image && <img src={image} alt={imageAlt ?? title} loading="lazy" />}
+    <div class="post-body">
+      <Content />
+    </div>
+    <p><a href="/blog">&larr; {lang === 'en' ? 'Back to blog' : 'Zurück zum Blog'}</a></p>
+  </article>
+</Layout>
+
+<style>
+  .post {
+    max-width: 720px;
+    margin: 2rem auto 4rem;
+  }
+  .post-meta {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+  .post h1 {
+    margin-top: 0.25rem;
+  }
+  .post img {
+    border-radius: 12px;
+    margin: 1.5rem 0;
+  }
+  .post-body :global(h2) {
+    margin-top: 2rem;
+  }
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 1.4rem;
+  }
+  .flag-banner {
+    background: #fff4e5;
+    border: 1px solid #f5c26b;
+    color: #7a4b00;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+</style>

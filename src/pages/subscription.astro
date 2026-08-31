@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Sidekik PLUS"
+  description="Das Beste von Sidekik - gemacht für deine Ziele. Alles was du brauchst um deine fliegerischen Ziele zu erreichen."
+  lang="de"
+  path="/subscription"
+>
+  <section class="hero">
+    <h1>Sidekik</h1>
+    <p class="lead">Das Beste von Sidekik - gemacht für deine Ziele.</p>
+  </section>
+
+  <section>
+    <h2>Alles was du brauchst um deine fliegerischen Ziele zu erreichen</h2>
+    <div class="feature-grid">
+      <div>
+        <h3>Navigation Features</h3>
+        <p>Direkt im Tracking kannst du dir Wendepunkte von den Challenges laden und bekommst Assistenz während deines Hike &amp; Fly.</p>
+      </div>
+      <div>
+        <h3>Persönliche Ziele</h3>
+        <p>Setze dir persönliche Ziele und lass dir deinen Fortschritt anzeigen. Das hilft enorm die gesetzten Ziele auch zu erreichen.</p>
+      </div>
+      <div>
+        <h3>Alle Statistiken</h3>
+        <p>Dein Fortschritt, deine Statistiken. Mit PLUS kannst du tiefer in die Auswertung gehen und mehr Statistiken anzeigen.</p>
+      </div>
+      <div>
+        <h3>XC Segmente</h3>
+        <p>Wie schneidest du ab im Vergleich mit anderen Piloten? Finde es heraus mit den vollständigen Leaderboards bei XC Segmenten.</p>
+      </div>
+    </div>
+    <p class="muted">+ viele weitere PLUS Features für 2026 geplant</p>
+  </section>
+
+  <section>
+    <h2>Unterstütze die Entwicklung</h2>
+    <p>
+      Sidekik wird von einem Ein-Mann-Team betrieben und ist komplett unabhängig entstanden – ohne
+      Investoren und ohne großes Unternehmen im Hintergrund. Mit einem PLUS-Abo kannst du den
+      Erhalt und die Weiterentwicklung der Plattform unterstützen und fördern.
+    </p>
+  </section>
+
+  <section class="cta-section">
+    <h2>Hol dir Sidekik PLUS</h2>
+    <p>Schalte alle Features frei und unterstütze die Entwicklung.</p>
+    <p><a class="cta-button" href="https://app.sidekik.cloud/signup">Jetzt starten</a></p>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 3rem 0 1rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .lead { color: var(--color-muted); font-size: 1.1rem; }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .muted { color: var(--color-muted); font-size: 0.9rem; }
+  .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
+</style>

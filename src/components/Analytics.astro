@@ -1,0 +1,155 @@
+---
+// PostHog web analytics with a consent gate.
+// Requires PUBLIC_POSTHOG_KEY (your PostHog project API key — this is a public,
+// client-side token, not a secret) to be set at build time. Defaults to
+// PostHog's EU Cloud host to match the "data stored within the EU" commitment
+// in the privacy policy; override with PUBLIC_POSTHOG_HOST if needed.
+const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
+const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com';
+---
+
+{posthogKey && (
+  <>
+    <script define:vars={{ posthogKey, posthogHost }}>
+      window.__SIDEKIK_POSTHOG_KEY__ = posthogKey;
+      window.__SIDEKIK_POSTHOG_HOST__ = posthogHost;
+    </script>
+    <script>
+      import posthog from 'posthog-js';
+
+      const CONSENT_KEY = 'sidekik_cookie_consent'; // 'granted' | 'denied'
+      const key = window.__SIDEKIK_POSTHOG_KEY__;
+      const host = window.__SIDEKIK_POSTHOG_HOST__;
+
+      posthog.init(key, {
+        api_host: host,
+        // Nothing is captured until the visitor explicitly consents.
+        opt_out_capturing_by_default: true,
+        capture_pageview: false,
+        persistence: 'localStorage+cookie',
+      });
+
+      function applyStoredConsent() {
+        const stored = localStorage.getItem(CONSENT_KEY);
+        if (stored === 'granted') {
+          posthog.opt_in_capturing();
+          posthog.capture('$pageview');
+          return true;
+        }
+        if (stored === 'denied') {
+          posthog.opt_out_capturing();
+          return true;
+        }
+        return false;
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-consent-banner');
+        if (banner) banner.hidden = false;
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-consent-banner');
+        if (banner) banner.hidden = true;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const alreadyDecided = applyStoredConsent();
+        if (!alreadyDecided) {
+          showBanner();
+        }
+
+        const acceptBtn = document.getElementById('cookie-consent-accept');
+        const declineBtn = document.getElementById('cookie-consent-decline');
+
+        acceptBtn?.addEventListener('click', () => {
+          localStorage.setItem(CONSENT_KEY, 'granted');
+          posthog.opt_in_capturing();
+          posthog.capture('$pageview');
+          hideBanner();
+        });
+
+        declineBtn?.addEventListener('click', () => {
+          localStorage.setItem(CONSENT_KEY, 'denied');
+          posthog.opt_out_capturing();
+          hideBanner();
+        });
+      });
+    </script>
+
+    <div id="cookie-consent-banner" class="cookie-banner" hidden>
+      <p>
+        Wir verwenden PostHog, um zu verstehen, wie diese Website genutzt wird. Das hilft uns,
+        Sidekik zu verbessern. Mehr dazu in unserer
+        {' '}<a href="/datenschutzrichtlinie">Datenschutzrichtlinie</a>.
+      </p>
+      <div class="cookie-banner-actions">
+        <button id="cookie-consent-decline" type="button" class="cookie-btn cookie-btn-secondary">
+          Ablehnen
+        </button>
+        <button id="cookie-consent-accept" type="button" class="cookie-btn cookie-btn-primary">
+          Akzeptieren
+        </button>
+      </div>
+    </div>
+
+    <style>
+      .cookie-banner {
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 100;
+        max-width: 640px;
+        margin: 0 auto;
+        background: #1a1a1a;
+        color: #fff;
+        border-radius: 12px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem 1.25rem;
+      }
+
+      .cookie-banner p {
+        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        flex: 1 1 260px;
+      }
+
+      .cookie-banner a {
+        color: #fff;
+        text-decoration: underline;
+      }
+
+      .cookie-banner-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-shrink: 0;
+      }
+
+      .cookie-btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .cookie-btn-primary {
+        background: #ff6a3d;
+        color: #fff;
+      }
+
+      .cookie-btn-secondary {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+      }
+    </style>
+  </>
+)}
