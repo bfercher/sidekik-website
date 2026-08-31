@@ -1,0 +1,21 @@
+name: sidekik-website
+region: fra
+static_sites:
+  - name: web
+    github:
+      repo: bfercher/sidekik-website
+      branch: main
+      deploy_on_push: true
+    environment_slug: node-js
+    build_command: npm run build
+    output_dir: dist
+    # PUBLIC_* vars are inlined into the JS bundle by Vite while `npm run build`
+    # runs, so they must be BUILD_TIME. Set as RUN_TIME they resolve to
+    # undefined and the analytics snippet is silently omitted from the output.
+    envs:
+      - key: PUBLIC_POSTHOG_KEY
+        scope: BUILD_TIME
+        value: ""
+      - key: PUBLIC_POSTHOG_HOST
+        scope: BUILD_TIME
+        value: https://eu.i.posthog.com
