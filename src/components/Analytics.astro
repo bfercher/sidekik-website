@@ -10,74 +10,13 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
 
 {posthogKey && (
   <>
-    <script define:vars={{ posthogKey, posthogHost }}>
-      window.__SIDEKIK_POSTHOG_KEY__ = posthogKey;
-      window.__SIDEKIK_POSTHOG_HOST__ = posthogHost;
-    </script>
-    <script>
-      import posthog from 'posthog-js';
-
-      const CONSENT_KEY = 'sidekik_cookie_consent'; // 'granted' | 'denied'
-      const key = window.__SIDEKIK_POSTHOG_KEY__;
-      const host = window.__SIDEKIK_POSTHOG_HOST__;
-
-      posthog.init(key, {
-        api_host: host,
-        // Nothing is captured until the visitor explicitly consents.
-        opt_out_capturing_by_default: true,
-        capture_pageview: false,
-        persistence: 'localStorage+cookie',
-      });
-
-      function applyStoredConsent() {
-        const stored = localStorage.getItem(CONSENT_KEY);
-        if (stored === 'granted') {
-          posthog.opt_in_capturing();
-          posthog.capture('$pageview');
-          return true;
-        }
-        if (stored === 'denied') {
-          posthog.opt_out_capturing();
-          return true;
-        }
-        return false;
-      }
-
-      function showBanner() {
-        const banner = document.getElementById('cookie-consent-banner');
-        if (banner) banner.hidden = false;
-      }
-
-      function hideBanner() {
-        const banner = document.getElementById('cookie-consent-banner');
-        if (banner) banner.hidden = true;
-      }
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const alreadyDecided = applyStoredConsent();
-        if (!alreadyDecided) {
-          showBanner();
-        }
-
-        const acceptBtn = document.getElementById('cookie-consent-accept');
-        const declineBtn = document.getElementById('cookie-consent-decline');
-
-        acceptBtn?.addEventListener('click', () => {
-          localStorage.setItem(CONSENT_KEY, 'granted');
-          posthog.opt_in_capturing();
-          posthog.capture('$pageview');
-          hideBanner();
-        });
-
-        declineBtn?.addEventListener('click', () => {
-          localStorage.setItem(CONSENT_KEY, 'denied');
-          posthog.opt_out_capturing();
-          hideBanner();
-        });
-      });
-    </script>
-
-    <div id="cookie-consent-banner" class="cookie-banner" hidden>
+    <div
+      id="cookie-consent-banner"
+      class="cookie-banner"
+      data-posthog-key={posthogKey}
+      data-posthog-host={posthogHost}
+      hidden
+    >
       <p>
         Wir verwenden PostHog, um zu verstehen, wie diese Website genutzt wird. Das hilft uns,
         Sidekik zu verbessern. Mehr dazu in unserer
@@ -111,6 +50,13 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
         flex-wrap: wrap;
         align-items: center;
         gap: 0.75rem 1.25rem;
+      }
+
+      /* `display: flex` above is an author-origin rule, so it beats the browser's
+         built-in `[hidden] { display: none }`. Without this the `hidden`
+         attribute has no effect and the banner can never be dismissed. */
+      .cookie-banner[hidden] {
+        display: none;
       }
 
       .cookie-banner p {
@@ -153,3 +99,64 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
     </style>
   </>
 )}
+
+{/* This script must stay at the top level of the template. Astro only compiles
+    and bundles <script> tags it finds statically; one nested inside the
+    expression above is emitted as raw HTML, so `import posthog from 'posthog-js'`
+    ends up in a classic script and throws "Cannot use import statement outside a
+    module", killing consent handling and analytics entirely. It reads its config
+    from the banner's data attributes and no-ops when the banner is absent, which
+    is also what makes it safe to render unconditionally. Note: passing
+    `define:vars` here would force the script inline and unbundled, reintroducing
+    the same failure. */}
+<script>
+  import posthog from 'posthog-js';
+
+  const CONSENT_KEY = 'sidekik_cookie_consent'; // 'granted' | 'denied'
+
+  function init() {
+    const banner = document.getElementById('cookie-consent-banner');
+    if (!banner) return;
+
+    const key = banner.dataset.posthogKey;
+    const host = banner.dataset.posthogHost;
+    if (!key) return;
+
+    posthog.init(key, {
+      api_host: host,
+      // Nothing is captured until the visitor explicitly consents.
+      opt_out_capturing_by_default: true,
+      capture_pageview: false,
+      persistence: 'localStorage+cookie',
+    });
+
+    const stored = localStorage.getItem(CONSENT_KEY);
+    if (stored === 'granted') {
+      posthog.opt_in_capturing();
+      posthog.capture('$pageview');
+    } else if (stored === 'denied') {
+      posthog.opt_out_capturing();
+    } else {
+      banner.hidden = false;
+    }
+
+    document.getElementById('cookie-consent-accept')?.addEventListener('click', () => {
+      localStorage.setItem(CONSENT_KEY, 'granted');
+      posthog.opt_in_capturing();
+      posthog.capture('$pageview');
+      banner.hidden = true;
+    });
+
+    document.getElementById('cookie-consent-decline')?.addEventListener('click', () => {
+      localStorage.setItem(CONSENT_KEY, 'denied');
+      posthog.opt_out_capturing();
+      banner.hidden = true;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+</script>

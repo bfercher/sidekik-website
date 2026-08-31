@@ -1,21 +1,45 @@
 name: sidekik-website
 region: fra
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+features:
+  - buildpack-stack=ubuntu-22
+ingress:
+  rules:
+    - component:
+        name: sidekik-website
+      match:
+        path:
+          prefix: /
+# A static_sites component has no container, port, or health check: DigitalOcean
+# runs build_command once and serves output_dir from its CDN. Deploying this as a
+# `services` component instead means `astro preview` (a Vite server) answers
+# traffic, and Vite rejects any Host header not in preview.allowedHosts with a
+# 403 -- while DO's readiness probe, which connects by container IP, still passes.
 static_sites:
-  - name: web
+  - name: sidekik-website
     github:
       repo: bfercher/sidekik-website
       branch: main
       deploy_on_push: true
     environment_slug: node-js
+    source_dir: /
     build_command: npm run build
     output_dir: dist
-    # PUBLIC_* vars are inlined into the JS bundle by Vite while `npm run build`
-    # runs, so they must be BUILD_TIME. Set as RUN_TIME they resolve to
-    # undefined and the analytics snippet is silently omitted from the output.
+    # Vite inlines PUBLIC_* vars into the bundle during `npm run build`, so these
+    # must be available at build time. src/components/Analytics.astro renders
+    # nothing at all when the key is unset, so a wrong scope here silently drops
+    # analytics with no build error.
+    #
+    # PUBLIC_POSTHOG_KEY is PostHog's project API key: a public, client-side
+    # token that ships in the built JS and is visible to every visitor. It is
+    # kept in plaintext here so this spec can be applied as-is -- a blank value
+    # would disable analytics on the next deploy.
     envs:
       - key: PUBLIC_POSTHOG_KEY
         scope: BUILD_TIME
-        value: ""
+        value: phc_sWFWQTWdkRLbunaQGqTQbuZgn4PvUsZ9Uqh3qTrYC47x
       - key: PUBLIC_POSTHOG_HOST
         scope: BUILD_TIME
         value: https://eu.i.posthog.com
