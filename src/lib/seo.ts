@@ -8,6 +8,8 @@ export const ORGANIZATION = {
   legalName: 'Sidekik GmbH',
   email: 'hi@sidekik.cloud',
   instagram: 'https://www.instagram.com/sidekik_paragliding/',
+  /** Public square mark; used as Organization / publisher logo in JSON-LD. */
+  logo: '/apple-touch-icon.png',
 };
 
 /**
@@ -21,8 +23,16 @@ export const ORGANIZATION = {
 export const APP = {
   name: 'Sidekik',
   stores: {
-    apple: { ratingValue: '4.6', ratingCount: 98 },
-    google: { ratingValue: '4.767', ratingCount: 60 },
+    apple: {
+      ratingValue: '4.6',
+      ratingCount: 98,
+      url: 'https://apps.apple.com/app/sidekik-paragliding-hike-fly/id6738481976',
+    },
+    google: {
+      ratingValue: '4.767',
+      ratingCount: 60,
+      url: 'https://play.google.com/store/apps/details?id=com.armadaar5org.sidekikapp',
+    },
   },
   /** Machine-readable form; see ratingValueLocalized for display. */
   ratingValue: '4.7',
@@ -32,6 +42,11 @@ export const APP = {
 /** German decimal comma, for rendering the rating in page copy. */
 export function ratingValueLocalized(): string {
   return APP.ratingValue.replace('.', ',');
+}
+
+/** Visible rating line — keep in lockstep with AggregateRating. */
+export function ratingLine(): string {
+  return `${ratingValueLocalized()} von 5 aus ${APP.ratingCount} Bewertungen · 2.500+ Piloten`;
 }
 
 /**

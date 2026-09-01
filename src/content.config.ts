@@ -10,6 +10,8 @@ const blog = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
+      /** Shorter <title> when the article title would truncate in SERPs. */
+      seoTitle: z.string().optional(),
       description: z.string(),
       pubDate: z.date().optional(),
       lang: z.enum(['de', 'en']).default('de'),

@@ -1,5 +1,6 @@
 ---
 title: "Ziele setzen, besser fliegen: Warum persönliche Ziele deinen Flug verändern"
+seoTitle: "Ziele setzen, besser fliegen | Sidekik Blog"
 description: "Warum das Setzen persönlicher Ziele deine Leistung beim Gleitschirmfliegen verbessert - und wie du mit Sidekik Ziele setzt und erreichst."
 pubDate: 2025-08-07
 lang: de

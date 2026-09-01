@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import StoreBadges from '../components/StoreBadges.astro';
+import { ratingLine } from '../lib/seo';
 import PhonePair from '../components/PhonePair.astro';
 import heroRelief from '../assets/pages/hero-relief-bg.png';
 import ctaSky from '../assets/pages/clubs/cta-sky.jpg';
@@ -142,7 +143,7 @@ const plans = [
 >
   <section class="hero full-bleed">
     <div class="full-bleed-inner hero-inner">
-      <Image src={heroRelief} alt="" class="hero-relief" width={900} aria-hidden="true" />
+      <Image src={heroRelief} alt=" " class="hero-relief" width={900} aria-hidden="true" />
       <div class="hero-copy">
         <h1>Sidekik für <span class="accent">Clubs und Vereine</span></h1>
         <p class="lead">
@@ -410,13 +411,13 @@ const plans = [
   </section>
 
   <section class="cta-section full-bleed">
-    <Image src={ctaSky} alt="" class="cta-bg" width={1024} aria-hidden="true" />
+    <Image src={ctaSky} alt=" " class="cta-bg" width={1024} aria-hidden="true" />
     <div class="cta-panel">
       <h2>Starte dein Abenteuer!</h2>
       <p>Jetzt kostenlos herunterladen.</p>
       <StoreBadges />
       <p class="rating-line">
-        <span class="star" aria-hidden="true">★</span> 4.8 Rating, Join 2500+ Pilots
+        <span class="star" aria-hidden="true">★</span> {ratingLine()}
       </p>
     </div>
   </section>

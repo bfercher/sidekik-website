@@ -1,8 +1,11 @@
 ---
 title: "Hike&Fly Tracking [BETA] - Gleitschirm Flug-Tracking direkt in Sidekik App"
+seoTitle: "Hike&Fly Tracking [BETA] | Sidekik Blog"
 description: "Der Beta-Launch des Hike&Fly Trackings direkt in der Sidekik App: Challenge-Peaks, Hindernis-Anzeige, Thermikkarte, Lufträume und XC-Strecke."
 pubDate: 2025-04-15
 lang: de
+image: "../../assets/blog/tracking-reloaded.jpg"
+imageAlt: "Sidekik Tracking: Flugspur, Karte und Live-Werte"
 ---
 
 <!-- Featured image alt/description not captured; original page had a hero image. Reading time: 2 Min. Lesezeit. Updated 15. Sept. 2025 on original site. -->

@@ -1,5 +1,6 @@
 ---
 title: "Set goals, fly better: Why personal goals change your flight"
+seoTitle: "Set goals, fly better | Sidekik Blog"
 description: "What makes a paraglider pilot better? Often, progress begins much more simply: with a goal. How to set and achieve flying goals with Sidekik."
 pubDate: 2025-09-15
 lang: en

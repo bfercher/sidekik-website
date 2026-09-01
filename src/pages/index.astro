@@ -9,7 +9,7 @@ import trackingStart from '../assets/pages/feature-tracking-start.png';
 import clubSegments from '../assets/pages/club-segments.png';
 import ctaSky from '../assets/pages/feature-cta-sky.jpg';
 import heroFeed from '../assets/pages/feature-feed.png';
-import { APP, SITE_URL } from '../lib/seo';
+import { APP, SITE_URL, ratingLine } from '../lib/seo';
 
 // Declared on the homepage rather than sitewide because this is the page that
 // visibly shows the rating, which is a condition for the rating markup.
@@ -20,14 +20,13 @@ const appSchema = {
   url: SITE_URL,
   applicationCategory: 'SportsApplication',
   operatingSystem: 'iOS, Android',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'EUR',
-  },
+  offers: [
+    { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: APP.stores.apple.url },
+    { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: APP.stores.google.url },
+  ],
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: '4.8',
+    ratingValue: APP.ratingValue,
     bestRating: '5',
     ratingCount: APP.ratingCount,
   },
@@ -112,6 +111,16 @@ const faqs = [
     a: 'Du kannst in den App-Einstellungen deinen Garmin Connect oder Suunto Account direkt mit Sidekik verknüpfen. Bei Suunto kannst du nach erfolgreicher Verknüpfung Aktivitäten vom Typ Hike, Paragliding, Trail-Run, Skitour importieren. Bei Garmin lassen sich Aktivitäten vom Typ Hike, Mountaineering oder Trail-Run importieren.',
   },
 ];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
 <Layout
@@ -119,12 +128,12 @@ const faqs = [
   description="Tracke deine Hike&Fly- und XC-Abenteuer, setze und erreiche deine fliegerischen Ziele – gemeinsam mit deinen Freunden und Clubkollegen."
   lang="de"
   path="/"
-  jsonLd={appSchema}
+  jsonLd={[appSchema, faqSchema]}
   flushFooter
 >
   <section class="hero full-bleed" id="download">
     <div class="full-bleed-inner hero-inner">
-      <Image src={heroRelief} alt="" class="hero-relief" width={900} aria-hidden="true" />
+      <Image src={heroRelief} alt=" " class="hero-relief" width={900} aria-hidden="true" />
       <div class="hero-copy">
         <h1>Bring dein Gleitschirmfliegen aufs <span class="accent">nächste Level.</span></h1>
         <p class="lead">
@@ -133,7 +142,7 @@ const faqs = [
         </p>
         <p class="download-label">Lade die kostenlose Sidekik App herunter</p>
         <StoreBadges eager align="start" />
-        <p class="rating-line"><span class="star" aria-hidden="true">★</span> 4.8 Rating, Join thousands of Pilots</p>
+        <p class="rating-line"><span class="star" aria-hidden="true">★</span> {ratingLine()}</p>
       </div>
       <div class="hero-phones">
         <PhonePair
@@ -206,7 +215,7 @@ const faqs = [
           <span class="eyebrow">Segmente</span>
           <h3>Hol dir die Krone</h3>
           <p>Vergleiche deine Route mit der Bestzeit, sieh dir Ideallinien und Schlüsselstellen an.</p>
-          <Image src={clubSegments} alt="Segmente" class="segments-shot" width={340} />
+          <Image src={clubSegments} alt="Club-Segment mit Karte, Bestzeit und Ideallinie" class="segments-shot" width={340} />
         </div>
       </div>
     </div>
@@ -289,12 +298,12 @@ const faqs = [
   </section>
 
   <section class="cta-section full-bleed">
-    <Image src={ctaSky} alt="" class="cta-bg" width={1024} aria-hidden="true" />
+    <Image src={ctaSky} alt=" " class="cta-bg" width={1024} aria-hidden="true" />
     <div class="cta-panel">
       <h2>Starte dein Abenteuer</h2>
       <p>Lade die kostenlose Sidekik App herunter</p>
       <StoreBadges />
-      <p class="rating-line"><span class="star" aria-hidden="true">★</span> 4.8 Rating, Join 2500+ Pilots</p>
+      <p class="rating-line"><span class="star" aria-hidden="true">★</span> {ratingLine()}</p>
     </div>
   </section>
 </Layout>

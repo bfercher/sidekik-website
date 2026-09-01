@@ -3,6 +3,8 @@ title: "Quickstart Guide"
 description: "In sieben Schritten zum Einstieg bei Sidekik: Account erstellen, Navigation, Challenges beitreten, Wegpunkte exportieren, Flüge einreichen und mehr."
 pubDate: 2024-08-27
 lang: de
+image: "../../assets/blog/sidekik-screenshots.png"
+imageAlt: "Sidekik App Screenshots: Feed, Tracking und Challenges"
 ---
 
 <!-- Published 27. Aug. 2024, updated 15. Sept. 2025. Featured image was a smartphone interface screenshot. -->

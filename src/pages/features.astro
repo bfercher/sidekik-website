@@ -22,6 +22,7 @@ import ctaSky from '../assets/pages/feature-cta-sky.jpg';
 import logoGarmin from '../assets/brand/logo-garmin.jpg';
 import logoSuunto from '../assets/brand/logo-suunto.png';
 import logoXcontest from '../assets/brand/logo-xcontest.png';
+import { ratingLine } from '../lib/seo';
 
 const trackingChips = [
   'Hike & Fly Tracking',
@@ -81,15 +82,15 @@ const statsChips = [
 ---
 
 <Layout
-  title="Sidekik | Die besten Features"
-  description="Alles in einer App: Flugtracking, Flug-Feed, persönliche Rekorde und Statistiken, Club Challenges und vieles mehr."
+  title="Features | Tracking, Livewind und Club Challenges"
+  description="Flugtracking, Livewind, On Air, persönliches Flugbuch, Statistiken und Club Challenges – alles in der Sidekik App."
   lang="de"
   path="/features"
   flushFooter
 >
   <section class="hero full-bleed">
     <div class="full-bleed-inner hero-inner">
-      <Image src={heroRelief} alt="" class="hero-relief" width={900} aria-hidden="true" />
+      <Image src={heroRelief} alt=" " class="hero-relief" width={900} aria-hidden="true" />
       <div class="hero-copy">
         <h1>Entdecke unsere besten <span class="accent">Features</span></h1>
         <p class="lead">
@@ -135,7 +136,6 @@ const statsChips = [
           frontAlt="On Air: Live-Karte mit Piloten und Following"
           backAlt="Home: Derzeit live – wer gerade in der Luft ist"
           smallBack
-          eager
         />
       </div>
       <div class="feature-copy">
@@ -165,7 +165,6 @@ const statsChips = [
           frontAlt="Livewind Windverlauf: Speed, Böen und Richtung über die Zeit"
           backAlt="Livewind auf der Karte: Stationen mit Richtung, Wind und Böen"
           smallBack
-          eager
         />
       </div>
       <div class="feature-copy">
@@ -388,12 +387,12 @@ const statsChips = [
   </section>
 
   <section class="cta-section full-bleed">
-    <Image src={ctaSky} alt="" class="cta-bg" width={1024} aria-hidden="true" />
+    <Image src={ctaSky} alt=" " class="cta-bg" width={1024} aria-hidden="true" />
     <div class="cta-panel">
       <h2>Starte dein Abenteuer</h2>
       <p>Lade die kostenlose Sidekik App herunter</p>
       <StoreBadges />
-      <p class="rating-line"><span class="star" aria-hidden="true">★</span> 4.8 Rating, Join 2500+ Pilots</p>
+      <p class="rating-line"><span class="star" aria-hidden="true">★</span> {ratingLine()}</p>
     </div>
   </section>
 </Layout>

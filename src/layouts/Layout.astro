@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Analytics from '../components/Analytics.astro';
-import { ORGANIZATION, SITE_URL, absoluteUrl, getAlternates } from '../lib/seo';
+import { APP, ORGANIZATION, SITE_URL, absoluteUrl, getAlternates } from '../lib/seo';
 import logo from '../assets/brand/sidekik-logo.png';
 
 interface Props {
@@ -12,11 +12,13 @@ interface Props {
   ogType?: 'website' | 'article';
   publishedTime?: Date;
   /** Page-specific JSON-LD, emitted alongside the sitewide Organization node. */
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** Overrides the default social preview image. Paths are made absolute. */
   ogImage?: { src: string; width: number; height: number };
   /** Drop the gap above the footer (for pages that end in a full-bleed section). */
   flushFooter?: boolean;
+  /** Soft-404 and similar pages that must not be indexed. */
+  noindex?: boolean;
 }
 
 const {
@@ -29,12 +31,14 @@ const {
   jsonLd,
   ogImage,
   flushFooter = false,
+  noindex = false,
 } = Astro.props;
 
 const canonicalURL = absoluteUrl(path);
 const alternates = getAlternates(path);
 const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
 const current = path.replace(/\/$/, '') || '/';
+const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 const nav = [
   { href: '/', label: 'Home' },
@@ -48,9 +52,10 @@ const isActive = (href: string) =>
   href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
 
 // Crawlers do not resolve relative URLs, so the image is always absolute.
-const DEFAULT_OG_IMAGE = { src: '/images/social/og-default.png', width: 1200, height: 630 };
+const DEFAULT_OG_IMAGE = { src: '/images/social/og-default.jpg', width: 1200, height: 630 };
 const social = ogImage ?? DEFAULT_OG_IMAGE;
 const socialImageUrl = social.src.startsWith('http') ? social.src : absoluteUrl(social.src);
+const organizationLogo = absoluteUrl(ORGANIZATION.logo);
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -59,7 +64,8 @@ const organizationSchema = {
   legalName: ORGANIZATION.legalName,
   url: SITE_URL,
   email: ORGANIZATION.email,
-  sameAs: [ORGANIZATION.instagram],
+  logo: { '@type': 'ImageObject', url: organizationLogo },
+  sameAs: [ORGANIZATION.instagram, APP.stores.apple.url, APP.stores.google.url],
 };
 ---
 
@@ -76,7 +82,11 @@ const organizationSchema = {
     />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <link rel="canonical" href={canonicalURL} />
+    )}
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -104,11 +114,12 @@ const organizationSchema = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={title} />
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
-    {jsonLd && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
-    )}
+    {jsonLdBlocks.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} is:inline />
+    ))}
 
     <style>
       :root {

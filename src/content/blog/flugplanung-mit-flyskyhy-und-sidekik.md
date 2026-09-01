@@ -3,6 +3,8 @@ title: "Flugplanung mit FlySkyHy und Sidekik"
 description: "Ein Leitfaden für die Flugplanung mit FlySkyHy und Sidekik: App einrichten, Wegpunkte importieren, Route erstellen und sicher fliegen."
 pubDate: 2024-08-02
 lang: de
+image: "../../assets/pages/feature-cta-sky.jpg"
+imageAlt: "Gleitschirmflug über Berglandschaft bei klarem Himmel"
 ---
 
 <!-- Published 2. Aug. 2024, updated 15. Sept. 2025. Featured image was a paraglider-in-flight photo from Wix static media. -->

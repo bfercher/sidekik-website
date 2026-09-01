@@ -18,7 +18,8 @@ interface Props {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
-const { title, description, pubDate, lang, author, image, imageAlt, flagged } = post.data;
+const { title, seoTitle, description, pubDate, lang, author, image, imageAlt, flagged } = post.data;
+const documentTitle = seoTitle ?? `${title} | Sidekik Blog`;
 
 const dateFormatter = new Intl.DateTimeFormat(lang === 'en' ? 'en-GB' : 'de-DE', {
   year: 'numeric',
@@ -56,14 +57,18 @@ const postSchema = {
   inLanguage: lang,
   mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
   author: { '@type': 'Person', name: author },
-  publisher: { '@type': 'Organization', name: ORGANIZATION.name },
+  publisher: {
+    '@type': 'Organization',
+    name: ORGANIZATION.name,
+    logo: { '@type': 'ImageObject', url: absoluteUrl(ORGANIZATION.logo) },
+  },
   ...(pubDate ? { datePublished: pubDate.toISOString() } : {}),
   ...(socialImage ? { image: absoluteUrl(socialImage.src) } : {}),
 };
 ---
 
 <Layout
-  title={`${title} | Sidekik Blog`}
+  title={documentTitle}
   description={description}
   lang={lang}
   path={`/post/${post.id}`}

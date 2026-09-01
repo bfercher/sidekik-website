@@ -1,6 +1,7 @@
 ---
 import badgeAppStore from '../assets/brand/badge-app-store.svg?url';
 import badgeGooglePlay from '../assets/brand/badge-google-play.svg?url';
+import { APP } from '../lib/seo';
 
 interface Props {
   eager?: boolean;
@@ -9,9 +10,8 @@ interface Props {
 
 const { eager = false, align = 'center' } = Astro.props;
 
-const appStoreUrl =
-  'https://apps.apple.com/gb/app/sidekik-paragliding-hike-fly/id6738481976?platform=iphone';
-const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.armadaar5org.sidekikapp';
+const appStoreUrl = APP.stores.apple.url;
+const playStoreUrl = APP.stores.google.url;
 ---
 
 <div class:list={['store-badges', { 'store-badges-start': align === 'start' }]}>
