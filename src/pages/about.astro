@@ -1,7 +1,28 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-import bernhard from '../assets/pages/bernhard.jpg';
+import bernhard from '../assets/pages/bernhard-about.jpg';
+import iconGoals from '../assets/icons/icon-goals.png';
+import iconCommunity from '../assets/icons/icon-community.png';
+import iconAnalyse from '../assets/icons/icon-analyse.png';
+
+const pillars = [
+  {
+    title: 'Spannende Ziele',
+    text: 'Ein Ziel ist der erste Schritt zum Wachstum. Setzt dir eigene persönliche Ziele oder mach bei Club-Challenges mit.',
+    icon: iconGoals,
+  },
+  {
+    title: 'Lebendige Community',
+    text: 'Teile deine Abenteuer mit Gleichgesinnten und lerne von anderen in unserer aktiven Community – ganz egal, ob du Neuling oder Profi bist.',
+    icon: iconCommunity,
+  },
+  {
+    title: 'Lernen durch Analyse',
+    text: 'Entwickle dich kontinuierlich weiter durch Feedback aus der Community, Selbstreflexion, gezielten Zielsetzungen und Fluganalysen.',
+    icon: iconAnalyse,
+  },
+];
 ---
 
 <Layout
@@ -9,76 +30,265 @@ import bernhard from '../assets/pages/bernhard.jpg';
   description="Unsere Mission ist es, Gleitschirmpiloten zu inspirieren, sich neue Ziele zu setzen, spannende Herausforderungen anzunehmen und ihre Fähigkeiten spielerisch zu verbessern."
   lang="de"
   path="/about"
+  flushFooter
 >
-  <section class="hero">
-    <h1>Über Sidekik</h1>
-    <p class="lead">
-      Unsere Mission ist es, Gleitschirmpiloten zu inspirieren, sich neue Ziele zu setzen,
-      spannende Herausforderungen anzunehmen und ihre Fähigkeiten spielerisch in einem
-      unterstützenden und dynamischen Umfeld zu verbessern.
-    </p>
+  <section class="about-dark full-bleed">
+    <div class="full-bleed-inner about-dark-inner">
+      <h1 class="mission">
+        Unsere Mission ist es, Gleitschirmpiloten zu inspirieren, sich neue Ziele zu setzen,
+        spannende Herausforderungen anzunehmen und ihre Fähigkeiten spielerisch in einem
+        unterstützenden und dynamischen Umfeld zu verbessern.
+      </h1>
+
+      <div class="pillars">
+        {pillars.map((pillar) => (
+          <div class="pillar">
+            <span class="pillar-icon" aria-hidden="true">
+              <Image src={pillar.icon} alt="" width={56} densities={[1, 2]} />
+            </span>
+            <h2>{pillar.title}</h2>
+            <p>{pillar.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="brand">
+        <p class="brand-title">
+          Sidekik <span class="ipa">[ˈsaɪd.kɪk]</span>
+        </p>
+        <p class="brand-copy">
+          &ldquo;Sidekick&rdquo; ist ein anderes Wort für &ldquo;Wingman&rdquo;. Es spiegelt die Rolle der
+          Plattform als vertrauenswürdiger Begleiter und Unterstützer wider. Sidekik ist da, um
+          dich bei deinen Gleitschirmabenteuern zu supporten, zu motivieren und zu leiten.
+        </p>
+      </div>
+    </div>
   </section>
 
-  <section class="pillars">
-    <div>
-      <h3>Spannende Ziele</h3>
-      <p>Ein Ziel ist der erste Schritt zum Wachstum. Setzt dir eigene persönliche Ziele oder mach bei Club-Challenges mit.</p>
+  <section class="origin full-bleed">
+    <div class="full-bleed-inner origin-inner">
+      <div class="origin-copy">
+        <h2>Alles hat einen Anfang</h2>
+        <p>
+          Die Idee entstand im Stubaital am Landeplatz. Mitglieder der &ldquo;Stubaier Jochdohlen&rdquo;
+          schwärmten über ihr soeben erlebtes Gipfel-Sammel-Abenteuer und diskutierten
+          Fehlentscheidungen, brenzlige Momente und Gipfel-Erfolge. Das Konzept haben wir im
+          &ldquo;Parateam Virgen&rdquo; übernommen und gleich gemerkt, dass diese Form der Challenge nicht nur
+          die Strecken-Cracks begeistert, sondern alle Erfahrungsstufen gleichermaßen einbindet. Es
+          ist eine großartige Herausforderung über einen längeren Zeitraum und bietet enorm viele
+          Möglichkeiten, sich als Pilot weiterzuentwickeln.
+        </p>
+        <p>
+          Inspiriert von dieser Begeisterung, habe ich mir mit Sidekik es zur Aufgabe gemacht,
+          dieses Format einem größeren Publikum zugänglich zu machen. Sidekik soll Piloten dazu
+          motivieren, neue Gebiete zu erkunden, Gänsehaut-Feeling erzeugen, wenn sie über neue
+          Gipfel soaren, gelegentlich ermutigen ihre Komfortzone zu verlassen und diese Abenteuer
+          mit Freunden und Kollegen zu teilen – mit dem Ziel zu lernen und Spaß zu haben.
+        </p>
+        <p class="signature">Bernhard, Entwickler von Sidekik</p>
+      </div>
+      <div class="origin-photo">
+        <Image
+          src={bernhard}
+          alt="Bernhard, Gründer von Sidekik, in den Bergen"
+          loading="lazy"
+          width={720}
+          densities={[1, 2]}
+        />
+      </div>
     </div>
-    <div>
-      <h3>Lebendige Community</h3>
-      <p>Teile deine Abenteuer mit Gleichgesinnten und lerne von anderen in unserer aktiven Community – ganz egal, ob du Neuling oder Profi bist.</p>
-    </div>
-    <div>
-      <h3>Lernen durch Analyse</h3>
-      <p>Entwickle dich kontinuierlich weiter durch Feedback aus der Community, Selbstreflexion, gezielten Zielsetzungen und Fluganalysen.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>Sidekik</h2>
-    <p class="ipa">[ˈsaɪdˌkɪk]</p>
-    <p>
-      "Sidekick" ist ein anderes Wort für "Wingman". Es spiegelt die Rolle der Plattform als
-      vertrauenswürdiger Begleiter und Unterstützer wider. Sidekik ist da, um dich bei deinen
-      Gleitschirmabenteuern zu supporten, zu motivieren und zu leiten.
-    </p>
-  </section>
-
-  <section class="origin">
-    <h2>Alles hat einen Anfang</h2>
-    <Image
-      src={bernhard}
-      alt="Bernhard, Gründer von Sidekik"
-      loading="lazy"
-      width={720}
-      densities={[1, 2]}
-    />
-    <p>
-      Die Idee entstand im Stubaital am Landeplatz. Mitglieder der "Stubaier Jochdohlen"
-      schwärmten über ihr soeben erlebtes Gipfel-Sammel-Abenteuer und diskutierten
-      Fehlentscheidungen, brenzlige Momente und Gipfel-Erfolge. Das Konzept haben wir im
-      "Parateam Virgen" übernommen und gleich gemerkt, dass diese Form der Challenge nicht nur
-      die Strecken-cracks begeistert, sondern alle Erfahrungsstufen gleichermaßen einbindet. Es
-      ist eine großartige Herausforderung über eine längeren Zeitraum und bietet enorm viele
-      Möglichkeiten sich als Pilot weiterzuentwickeln.
-    </p>
-    <p>
-      Inspiriert von dieser Begeisterung, habe ich mir mit Sidekik es zur Aufgabe gemacht,
-      dieses Format einem größeren Publikum zugänglich zu machen. Sidekik soll Piloten dazu
-      motivieren, neue Gebiete zu erkunden, Gänsehaut feeling erzeugen, wenn sie über neue
-      Gipfel soaren, gelegentlich ermutigen ihre Komfortzone zu verlassen und diese Abenteuer
-      mit Freunden und Kollegen zu teilen – mit dem Ziel zu lernen und Spaß zu haben.
-    </p>
-    <p class="signature">— Bernhard, Entwickler von Sidekik</p>
   </section>
 </Layout>
 
 <style>
-  .hero { padding: 3rem 0 1.5rem; }
-  .hero h1 { font-size: 2.2rem; }
-  .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 680px; }
-  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
-  .origin img { border-radius: 12px; max-width: 240px; }
-  .ipa { color: var(--color-muted); }
-  .signature { font-style: italic; }
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .full-bleed-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 48px);
+  }
+
+  .about-dark {
+    background: #000;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .about-dark-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: clamp(56px, 8vw, 96px);
+    padding-bottom: clamp(72px, 10vw, 120px);
+  }
+
+  .mission {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3.2vw, 32px);
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-wrap: pretty;
+    max-width: 820px;
+    margin: 0;
+  }
+
+  .pillars {
+    width: 100%;
+    margin-top: clamp(48px, 7vw, 80px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 4vw, 48px);
+    background: #171c24;
+    border-radius: 22px;
+    padding: clamp(28px, 4vw, 44px) clamp(24px, 3.5vw, 40px);
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.45);
+  }
+
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pillar-icon {
+    display: flex;
+    width: 56px;
+    height: 56px;
+  }
+
+  .pillar-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .pillar h2 {
+    font-size: clamp(17px, 1.8vw, 20px);
+    font-weight: 800;
+    margin: 4px 0 0;
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  .pillar p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #c8cdd4;
+    text-wrap: pretty;
+  }
+
+  .brand {
+    margin-top: clamp(64px, 9vw, 104px);
+    max-width: 760px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .brand-title {
+    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    font-size: clamp(36px, 5.5vw, 56px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #fff;
+  }
+
+  .ipa {
+    font-style: italic;
+  }
+
+  .brand-copy {
+    margin: 0;
+    font-size: clamp(16px, 1.8vw, 18px);
+    line-height: 1.65;
+    color: #d6dce4;
+    text-wrap: pretty;
+  }
+
+  .origin {
+    background: #eef2f7;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .origin-inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+    padding-top: clamp(48px, 7vw, 80px);
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+
+  .origin-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .origin-copy h2 {
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: 800;
+    text-transform: none;
+    margin: 0;
+    letter-spacing: -0.03em;
+  }
+
+  .origin-copy p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--color-text);
+    text-wrap: pretty;
+  }
+
+  .signature {
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  .origin-photo {
+    border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background: #d5dbe4;
+  }
+
+  .origin-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .pillars {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .origin-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .origin-photo {
+      max-height: 420px;
+      aspect-ratio: 4 / 5;
+    }
+  }
 </style>

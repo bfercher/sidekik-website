@@ -1,14 +1,15 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import StoreBadges from '../components/StoreBadges.astro';
+import PhonePair from '../components/PhonePair.astro';
 import heroRelief from '../assets/pages/hero-relief-bg.png';
-import appScreenshotFeed from '../assets/pages/app-screenshot-feed.png';
-import appScreenshotLeaderboard from '../assets/pages/app-screenshot-leaderboard.png';
-import trackingScreens from '../assets/pages/app-screenshots-hero.png';
+import trackingLive from '../assets/pages/feature-tracking-live.jpg';
+import trackingStart from '../assets/pages/feature-tracking-start.jpg';
 import clubSegments from '../assets/pages/club-segments.png';
-import { APP, SITE_URL, ratingValueLocalized } from '../lib/seo';
-
-const rating = ratingValueLocalized();
+import ctaSky from '../assets/pages/feature-cta-sky.jpg';
+import heroFeed from '../assets/pages/feature-feed.png';
+import { APP, SITE_URL } from '../lib/seo';
 
 // Declared on the homepage rather than sitewide because this is the page that
 // visibly shows the rating, which is a condition for the rating markup.
@@ -26,15 +27,11 @@ const appSchema = {
   },
   aggregateRating: {
     '@type': 'AggregateRating',
-    ratingValue: APP.ratingValue,
+    ratingValue: '4.8',
     bestRating: '5',
     ratingCount: APP.ratingCount,
   },
 };
-
-const appStoreUrl = 'https://apps.apple.com/gb/app/sidekik-paragliding-hike-fly/id6738481976?platform=iphone';
-const playStoreUrl = 'https://play.google.com/store/apps/details?id=com.armadaar5org.sidekikapp';
-const signupUrl = 'https://app.sidekik.cloud/signup';
 
 const whyPoints = [
   'Setze dir Ziele und miss den Fortschritt.',
@@ -123,46 +120,34 @@ const faqs = [
   lang="de"
   path="/"
   jsonLd={appSchema}
+  flushFooter
 >
-  <section class="hero full-bleed">
+  <section class="hero full-bleed" id="download">
     <div class="full-bleed-inner hero-inner">
       <Image src={heroRelief} alt="" class="hero-relief" width={900} aria-hidden="true" />
       <div class="hero-copy">
-        <span class="rating-pill">★★★★★ <b>{rating}</b> · 2.500+ Piloten · 200+ Clubs</span>
-        <h1>Bring dein Fliegen aufs <span class="accent">nächste Level</span></h1>
+        <h1>Bring dein Gleitschirmfliegen aufs <span class="accent">nächste Level.</span></h1>
         <p class="lead">
           Tracke deine Hike&amp;Fly- und XC-Abenteuer, setze und erreiche deine fliegerischen Ziele –
           gemeinsam mit deinen Freunden und Clubkollegen.
         </p>
-        <div class="store-badges">
-          <a class="store-badge" href={appStoreUrl} rel="noopener">
-            <span class="store-eyebrow">Laden im</span>
-            <span class="store-name">App Store</span>
-          </a>
-          <a class="store-badge" href={playStoreUrl} rel="noopener">
-            <span class="store-eyebrow">Jetzt bei</span>
-            <span class="store-name">Google Play</span>
-          </a>
-        </div>
+        <p class="download-label">Lade die kostenlose Sidekik App herunter</p>
+        <StoreBadges eager align="start" />
+        <p class="rating-line"><span class="star" aria-hidden="true">★</span> 4.8 Rating, Join thousands of Pilots</p>
       </div>
       <div class="hero-phones">
-        <Image
-          src={appScreenshotFeed}
-          alt="Sidekik App: Feed mit Flügen und Hike&Fly Abenteuern"
-          class="phone phone-down"
-          width={230}
-          loading="eager"
-          fetchpriority="high"
-        />
-        <Image
-          src={appScreenshotLeaderboard}
-          alt="Sidekik App: Club-Leaderboard und XP"
-          class="phone phone-up"
-          width={230}
-          loading="eager"
+        <PhonePair
+          front={trackingLive}
+          back={heroFeed}
+          frontAlt="Sidekik Tracking: Karte und Live-Werte"
+          backAlt="Sidekik Home-Feed: Hike&Fly Posts und Community"
+          smallBack
+          eager
+          dark
         />
       </div>
     </div>
+    <div class="hero-edge" aria-hidden="true"></div>
   </section>
 
   <section class="why">
@@ -185,7 +170,16 @@ const faqs = [
         <div class="chip-row">
           {trackingChips.map((chip) => <span class="chip">{chip}</span>)}
         </div>
-        <Image src={trackingScreens} alt="Sidekik App Screens" class="tracking-shot" width={940} />
+        <div class="tracking-phones">
+          <PhonePair
+            front={trackingLive}
+            back={trackingStart}
+            frontAlt="Sidekik Tracking im Flug: Karte, Live-Werte und andere Piloten"
+            backAlt="Tracking starten: Challenge-Wegpunkte, Live Tracking und Offline Maps"
+            smallBack
+            eager
+          />
+        </div>
       </div>
       <div class="feature-stack">
         <div class="card card-dark">
@@ -295,19 +289,12 @@ const faqs = [
   </section>
 
   <section class="cta-section full-bleed">
-    <div class="full-bleed-inner cta-inner">
+    <Image src={ctaSky} alt="" class="cta-bg" width={1024} aria-hidden="true" />
+    <div class="cta-panel">
       <h2>Starte dein Abenteuer</h2>
-      <p>Lade die kostenlose Sidekik App herunter. ★ {rating} · 2.500+ Piloten.</p>
-      <div class="store-badges">
-        <a class="store-badge store-badge-accent" href={appStoreUrl} rel="noopener">
-          <span class="store-eyebrow">Laden im</span>
-          <span class="store-name">App Store</span>
-        </a>
-        <a class="store-badge" href={playStoreUrl} rel="noopener">
-          <span class="store-eyebrow">Jetzt bei</span>
-          <span class="store-name">Google Play</span>
-        </a>
-      </div>
+      <p>Lade die kostenlose Sidekik App herunter</p>
+      <StoreBadges />
+      <p class="rating-line"><span class="star" aria-hidden="true">★</span> 4.8 Rating, Join 2500+ Pilots</p>
     </div>
   </section>
 </Layout>
@@ -363,59 +350,52 @@ const faqs = [
   .hero {
     background: var(--color-ink);
     color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
   }
 
   .hero-inner {
     position: relative;
-    overflow: hidden;
-    padding-top: 24px;
-    padding-bottom: clamp(48px, 7vw, 72px);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
     align-items: center;
+    gap: clamp(24px, 4vw, 48px);
+    padding-top: clamp(36px, 5vw, 64px);
+    padding-bottom: clamp(48px, 7vw, 80px);
+    max-width: 1240px;
   }
 
   .hero-relief {
     position: absolute;
-    left: -60px;
-    bottom: -160px;
-    width: 900px;
-    max-width: 160%;
-    opacity: 0.09;
+    right: -4%;
+    top: 24px;
+    width: min(720px, 58%);
+    height: auto;
+    max-width: none;
+    opacity: 0.45;
     pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, #000 40%, transparent 72%);
   }
 
   .hero-copy {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 22px;
     align-items: flex-start;
-  }
-
-  .rating-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #2a3240;
-    padding: 7px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    color: #b7bec9;
-  }
-
-  .rating-pill b {
-    color: #fff;
+    text-align: left;
+    gap: 14px;
+    z-index: 1;
   }
 
   .hero h1 {
-    font-size: clamp(34px, 6vw, 60px);
-    line-height: 1;
-    letter-spacing: -0.035em;
-    font-weight: 900;
+    font-size: clamp(32px, 5.2vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 800;
     margin: 0;
-    text-transform: uppercase;
     text-wrap: balance;
   }
 
@@ -426,81 +406,49 @@ const faqs = [
   .hero .lead {
     font-size: clamp(16px, 2vw, 18px);
     line-height: 1.55;
-    color: #9ba5b4;
+    color: #c8c8c8;
     margin: 0;
-    max-width: 470px;
+    max-width: 520px;
     text-wrap: pretty;
   }
 
-  .store-badges {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .store-badge {
-    display: flex;
-    flex-direction: column;
-    text-decoration: none;
-    background: #fff;
-    color: var(--color-ink);
-    padding: 11px 24px;
-    border-radius: 10px;
-  }
-
-  .store-badge:hover {
-    color: var(--color-ink);
-    opacity: 0.9;
-  }
-
-  .store-badge-accent {
-    background: var(--color-primary);
+  .download-label {
+    margin: 10px 0 0;
+    font-size: 15px;
     color: #fff;
   }
 
-  .store-badge-accent:hover {
+  .rating-line {
+    margin: 4px 0 0;
+    font-size: 15px;
     color: #fff;
   }
 
-  .store-eyebrow {
-    font-size: 11px;
-    opacity: 0.6;
-  }
-
-  .store-name {
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 800;
+  .rating-line .star {
+    color: #ffc400;
+    margin-right: 4px;
   }
 
   .hero-phones {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+    z-index: 1;
   }
 
-  .phone {
-    width: min(230px, 40vw);
-    border-radius: 26px;
-    border: 6px solid #232a35;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-    display: block;
-  }
-
-  .phone-down {
-    transform: translateY(18px);
-  }
-
-  .phone-up {
-    transform: translateY(-18px);
+  .hero-edge {
+    height: clamp(28px, 4vw, 48px);
+    background: var(--color-bg);
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
   }
 
   /* Why */
   .why {
-    padding-top: clamp(40px, 6vw, 64px);
+    position: relative;
+    z-index: 0;
+    padding-top: clamp(8px, 2vw, 16px);
   }
 
   .why h2 {
@@ -575,11 +523,10 @@ const faqs = [
     font-size: 13px;
   }
 
-  .tracking-shot {
-    width: 100%;
-    display: block;
+  .tracking-phones {
     margin-top: 6px;
-    border-radius: 12px;
+    display: flex;
+    justify-content: center;
   }
 
   .feature-stack {
@@ -650,6 +597,7 @@ const faqs = [
 
   .segments-shot {
     width: 100%;
+    height: auto;
     max-width: 340px;
     max-height: clamp(300px, 42vh, 480px);
     object-fit: contain;
@@ -908,23 +856,56 @@ const faqs = [
   /* CTA */
   .cta-section {
     margin-top: clamp(40px, 6vw, 64px);
+    margin-bottom: 0;
+    position: relative;
+    min-height: clamp(380px, 48vw, 520px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
     background: var(--color-ink);
-    color: #fff;
   }
 
-  .cta-inner {
-    padding-top: clamp(48px, 7vw, 72px);
-    padding-bottom: clamp(48px, 7vw, 72px);
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    z-index: 0;
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.4));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .cta-panel {
+    position: relative;
+    z-index: 2;
+    background: var(--color-ink);
+    color: #fff;
+    border-radius: 24px;
+    padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     text-align: center;
+    max-width: 520px;
+    margin: clamp(32px, 5vw, 56px) 20px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
   }
 
   .cta-section h2 {
-    font-size: clamp(32px, 6vw, 52px);
+    font-size: clamp(28px, 5vw, 42px);
     letter-spacing: -0.035em;
+    text-transform: uppercase;
     text-wrap: balance;
   }
 
@@ -934,12 +915,7 @@ const faqs = [
     color: #9ba5b4;
   }
 
-  .cta-section .store-badges {
-    justify-content: center;
-  }
-
   @media (max-width: 1040px) {
-    .hero-inner,
     .feature-grid,
     .clubs-card,
     .testimonial-grid,
@@ -952,13 +928,43 @@ const faqs = [
     }
   }
 
+  @media (max-width: 860px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding-bottom: clamp(36px, 6vw, 56px);
+    }
+
+    .hero-relief {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: min(780px, 92vw);
+      top: 16px;
+    }
+
+    .hero-copy {
+      text-align: left;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .hero-phones {
+      width: 100%;
+    }
+  }
+
   @media (max-width: 620px) {
     .why-grid {
       grid-template-columns: 1fr;
     }
 
-    .rating-pill {
-      flex-wrap: wrap;
+    .hero-copy {
+      gap: 14px;
+    }
+
+    .download-label {
+      margin-top: 4px;
     }
   }
 </style>

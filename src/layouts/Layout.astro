@@ -15,6 +15,8 @@ interface Props {
   jsonLd?: Record<string, unknown>;
   /** Overrides the default social preview image. Paths are made absolute. */
   ogImage?: { src: string; width: number; height: number };
+  /** Drop the gap above the footer (for pages that end in a full-bleed section). */
+  flushFooter?: boolean;
 }
 
 const {
@@ -26,11 +28,24 @@ const {
   publishedTime,
   jsonLd,
   ogImage,
+  flushFooter = false,
 } = Astro.props;
 
 const canonicalURL = absoluteUrl(path);
 const alternates = getAlternates(path);
 const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
+const current = path.replace(/\/$/, '') || '/';
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/features', label: 'Features' },
+  { href: '/clubs', label: 'Für Clubs' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'About' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
 
 // Crawlers do not resolve relative URLs, so the image is always absolute.
 const DEFAULT_OG_IMAGE = { src: '/images/social/og-default.png', width: 1200, height: 630 };
@@ -56,7 +71,7 @@ const organizationSchema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <title>{title}</title>
@@ -147,7 +162,7 @@ const organizationSchema = {
       header.site-header {
         position: sticky;
         top: 0;
-        background: var(--color-ink);
+        background: #000;
         z-index: 10;
       }
 
@@ -155,17 +170,10 @@ const organizationSchema = {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.9rem 1.25rem;
-        max-width: var(--max-width);
+        padding: 1.05rem 1.5rem;
+        max-width: 1240px;
         margin: 0 auto;
         gap: 1.25rem;
-      }
-
-      .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 2.1rem;
-        min-width: 0;
       }
 
       .logo-mark {
@@ -174,10 +182,14 @@ const organizationSchema = {
         width: auto;
       }
 
+      nav.main-nav {
+        margin-left: auto;
+      }
+
       nav.main-nav ul {
         list-style: none;
         display: flex;
-        gap: 1.5rem;
+        gap: 1.75rem;
         margin: 0;
         padding: 0;
         flex-wrap: wrap;
@@ -185,13 +197,19 @@ const organizationSchema = {
 
       nav.main-nav a {
         text-decoration: none;
-        color: #b7bec9;
+        color: #fff;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
       }
 
       nav.main-nav a:hover {
         color: #fff;
+        opacity: 0.8;
+      }
+
+      nav.main-nav a[aria-current='page'] {
+        color: var(--color-primary);
+        opacity: 1;
       }
 
       .nav-toggle-input {
@@ -220,8 +238,8 @@ const organizationSchema = {
         outline-offset: 2px;
       }
 
-      .nav-cta {
-        white-space: nowrap;
+      .nav-toggle {
+        margin-left: 0;
       }
 
       main {
@@ -233,6 +251,10 @@ const organizationSchema = {
         background: #080b0f;
         color: #9ba5b4;
         padding: 3rem 0 2rem;
+      }
+
+      footer.site-footer.flush {
+        margin-top: 0;
       }
 
       .footer-inner {
@@ -348,12 +370,14 @@ const organizationSchema = {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+          margin-left: auto;
         }
 
         nav.main-nav {
           display: none;
           width: 100%;
-          order: 3;
+          order: 4;
+          margin-left: 0;
         }
 
         nav.main-nav ul {
@@ -386,23 +410,22 @@ const organizationSchema = {
   <body>
     <header class="site-header">
       <div class="nav-inner">
-        <div class="nav-left">
-          <a href="/" aria-label="Sidekik Startseite">
-            <Image src={logo} alt="Sidekik" class="logo-mark" width={140} />
-          </a>
-          <nav class="main-nav" aria-label="Hauptnavigation" id="main-nav">
-            <ul>
-              <li><a href="/features">Features</a></li>
-              <li><a href="/clubs">Für Clubs</a></li>
-              <li><a href="/challenges">Challenges</a></li>
-              <li><a href="/blog">Blog</a></li>
-              <li><a href="/about">About</a></li>
-            </ul>
-          </nav>
-        </div>
+        <a href="/" aria-label="Sidekik Startseite">
+          <Image src={logo} alt="Sidekik" class="logo-mark" width={140} loading="eager" />
+        </a>
         <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input" />
         <label class="nav-toggle" for="nav-toggle-input" aria-label="Menü öffnen">☰</label>
-        <a class="cta-button nav-cta" href="https://app.sidekik.cloud/signup">Gratis starten</a>
+        <nav class="main-nav" aria-label="Hauptnavigation" id="main-nav">
+          <ul>
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </header>
 
@@ -410,7 +433,7 @@ const organizationSchema = {
       <slot />
     </main>
 
-    <footer class="site-footer">
+    <footer class:list={['site-footer', { flush: flushFooter }]}>
       <div class="wrap footer-inner">
         <div class="footer-brand-col">
           <a class="footer-brand" href="/">
