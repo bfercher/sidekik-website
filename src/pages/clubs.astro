@@ -1,7 +1,136 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-import clubSegments from '../assets/pages/club-segments.png';
+import StoreBadges from '../components/StoreBadges.astro';
+import PhonePair from '../components/PhonePair.astro';
+import heroRelief from '../assets/pages/hero-relief-bg.png';
+import ctaSky from '../assets/pages/clubs/cta-sky.jpg';
+
+import logoMojo from '../assets/pages/clubs/logo-mojo.png';
+import logoPraebichl from '../assets/pages/clubs/logo-praebichl.png';
+import logoParateam from '../assets/pages/clubs/logo-parateam-virgen.png';
+import logoGoldenEagles from '../assets/pages/clubs/logo-golden-eagles.png';
+import logoSeegeier from '../assets/pages/clubs/logo-seegeier.png';
+import logoCumulus from '../assets/pages/clubs/logo-cumulus.png';
+
+import shotChallengeA from '../assets/pages/clubs/shot-challenge-a.png';
+import shotChallengeB from '../assets/pages/clubs/shot-challenge-b.png';
+import shotClubA from '../assets/pages/clubs/shot-club-a.png';
+import shotClubB from '../assets/pages/clubs/shot-club-b.png';
+import shotLeaderboardA from '../assets/pages/clubs/shot-leaderboard-a.png';
+import shotLeaderboardB from '../assets/pages/clubs/shot-leaderboard-b.png';
+import shotTaskA from '../assets/pages/clubs/shot-task-a.png';
+import shotTaskB from '../assets/pages/clubs/shot-task-b.png';
+import shotSegment from '../assets/pages/clubs/shot-segment.png';
+import clubmeisterschaft from '../assets/pages/clubs/clubmeisterschaft.jpg';
+
+const clubLogos = [
+  { src: logoMojo, alt: 'Mojo Sportverein' },
+  { src: logoPraebichl, alt: 'Soaring Club Präbichl' },
+  { src: logoParateam, alt: 'Parateam Virgen' },
+  { src: logoGoldenEagles, alt: 'Golden Eagles Alpine Gliders Zillertal' },
+  { src: logoSeegeier, alt: 'Seegeier Para- und Hängegleiter Club' },
+  { src: logoCumulus, alt: 'Cumulus Paragleiter Eisenwurzen' },
+];
+
+const pillars = [
+  {
+    title: 'Gemeinsame Ziele',
+    text: 'Durch die Challenges fliegen die Kollegen den selben Zielen hinterher. Gemeinsame Flüge, gemeinsame Abenteuer.',
+    icon: 'goals',
+  },
+  {
+    title: 'Gruppenmotivation',
+    text: 'Das Leaderboard und das Teilen von Flügen motiviert ungemein. Geteilte Freude ist doppelte Freude.',
+    icon: 'group',
+  },
+  {
+    title: 'Gemeinsam Lernen',
+    text: 'Ziele motivieren, sich an die Grenzen heranzutasten und dabei besser zu werden. Mit jedem Flug, mit jedem gesammelten Wegpunkt.',
+    icon: 'learn',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      'Dass meine Vereinskollegen/innen jetzt erstmal auch andere Wege beschreiten und nicht immer auf den Rennstrecken unterwegs sind, verdanken wir der Sidekik Challenge.',
+    name: 'Bene Dornauer',
+    role: 'Red Bull X-Alps Athlete 2025',
+  },
+  {
+    quote: 'Die Sidekik Challenges haben dieses Jahr aus jedem unserer Mitglieder einen besseren Piloten gemacht.',
+    name: 'Robert Assmair',
+    role: 'Parateam Virgen',
+  },
+  {
+    quote:
+      'Generell beeinflusst es total die Flugrouten – das merke ich bei mir selber – im positiven Sinn :-) Weil dann plant man doch noch ein zwei Wendepunkte mehr ein.',
+    name: 'Marco',
+    role: 'Seegeier (Steiermark)',
+  },
+];
+
+const leaderboards = [
+  'Summe XC-Strecke',
+  'Summe Airtime',
+  'Max. FAI-Strecke',
+  'Max. Höhenmeter Hiking',
+  'Max. Höhenmeter Flying',
+  'Summe Höhenmeter Hiking',
+  'Summe Höhenmeter Flying',
+  'Anzahl der Flüge',
+];
+
+const plans = [
+  {
+    name: 'CLUB Free',
+    sub: 'Kostenlos starten',
+    price: '€ 0,00',
+    period: '',
+    features: [
+      'Club Profil erstellen und verwalten',
+      'Bis zu 20 registrierte Mitglieder',
+      '1 Club-Challenge im Jahr',
+    ],
+    cta: 'Loslegen',
+    href: 'https://app.sidekik.cloud/signup',
+  },
+  {
+    name: 'CLUB Silver',
+    sub: 'Für wachsende Vereine',
+    price: '€ 9,92',
+    period: '/ Monat',
+    note: 'jährliches Abo € 119,–',
+    features: [
+      'Club Profil erstellen und verwalten',
+      'Bis zu 50 registrierte Mitglieder',
+      'Unlimitiert Club-Challenges',
+      'Club Leaderboards',
+      'Verifiziert Badge',
+    ],
+    cta: 'Jetzt anfragen',
+    href: 'mailto:hi@sidekik.cloud',
+  },
+  {
+    name: 'CLUB Gold',
+    sub: 'Für Vereine, die mehr wollen',
+    price: '€ 23,95',
+    period: '/ Monat',
+    note: 'jährliches Abo € 279,–',
+    features: [
+      'Alles von Club Silver',
+      'Bis zu 100 Mitglieder',
+      'Sponsor-Anzeige auf der Clubseite*',
+      'Option für öffentliche Challenges',
+      'Eigene Tasks für Wettbewerbe',
+      'Speed-Sections (Segmente)',
+      'Goldenes Verifiziert-Badge',
+    ],
+    cta: 'Jetzt anfragen',
+    href: 'mailto:hi@sidekik.cloud',
+  },
+];
 ---
 
 <Layout
@@ -9,201 +138,898 @@ import clubSegments from '../assets/pages/club-segments.png';
   description="Organisiere spannende Challenges oder Hike&Fly Wettbewerbe für deinen Gleitschirm Club. Setzt euch gemeinsame Ziele."
   lang="de"
   path="/clubs"
+  flushFooter
 >
-  <section class="hero">
-    <h1>Sidekik für Clubs und Vereine</h1>
-    <p class="lead">
-      Erstellt eure eigenen Herausforderungen und Flugaufgaben. Teil eure Flüge und Hike&amp;Flys
-      untereinander und motiviert euch gegenseitig.
-    </p>
-  </section>
-
-  <p class="social-proof">200+ Gleitschirm Clubs nutzen bereits Sidekik</p>
-
-  <section class="feature-grid">
-    <div>
-      <h3>Gemeinsame Ziele</h3>
-      <p>Durch die Challenges fliegen die Kollegen den selben Zielen hinterher. Gemeinsame Flüge, gemeinsame Abenteuer.</p>
-    </div>
-    <div>
-      <h3>Gruppenmotivation</h3>
-      <p>Das Leaderboard und das Teilen von Flügen motiviert ungemein. Geteilte Freude, ist doppelte Freude.</p>
-    </div>
-    <div>
-      <h3>Gemeinsam Lernen</h3>
-      <p>Ziele motivieren, sich an die Grenzen heranzutasten und dabei zu besser zu werden. Mit jedem Flug, mit jedem gesammelten Wegpunkt.</p>
+  <section class="hero full-bleed">
+    <div class="full-bleed-inner hero-inner">
+      <Image src={heroRelief} alt="" class="hero-relief" width={900} aria-hidden="true" />
+      <div class="hero-copy">
+        <h1>Sidekik für <span class="accent">Clubs und Vereine</span></h1>
+        <p class="lead">
+          Erstellt eure eigenen Herausforderungen und Flugaufgaben. Teilt eure Flüge und
+          Hike&amp;Flys untereinander und motiviert euch gegenseitig.
+        </p>
+      </div>
+      <p class="logo-label">200+ Gleitschirm Clubs nutzen bereits Sidekik</p>
+      <div class="logo-row">
+        {clubLogos.map((logo) => (
+          <Image src={logo.src} alt={logo.alt} class="club-logo" width={140} />
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="testimonials">
-    <blockquote>
-      "Dass meine Vereinskollegen/innen jetzt erstmal auch andere Wege beschreiten und nicht immer auf den Rennstrecken unterwegs sind, verdanken wir der Sidekik Challenge."
-      <footer>— Bene Dornauer, Red Bull X-Alps Athlete 2025</footer>
-    </blockquote>
-    <blockquote>
-      "Die Sidekik Challenges haben dieses Jahr aus jedem unserer Mitglieder einen besseren Piloten gemacht."
-      <footer>— Robert, Parateam Virgen</footer>
-    </blockquote>
-    <blockquote>
-      "Generell beeinflusst es total die Flugrouten - das merke ich bei mir selber - im positiven Sinn :-) Weil dann plant man doch noch ein zwei Wendepunkte mehr ein."
-      <footer>— Marco, Seegeier (Steiermark)</footer>
-    </blockquote>
+  <section class="pillars-section">
+    <div class="pillars">
+      {pillars.map((pillar) => (
+        <div class="pillar">
+          <span class="pillar-icon" aria-hidden="true">
+            {pillar.icon === 'goals' && (
+              <svg viewBox="0 0 40 40" fill="none">
+                <circle cx="20" cy="20" r="14" stroke="currentColor" stroke-width="2.2" />
+                <circle cx="20" cy="20" r="7" stroke="currentColor" stroke-width="2.2" />
+                <circle cx="20" cy="20" r="2.2" fill="currentColor" />
+              </svg>
+            )}
+            {pillar.icon === 'group' && (
+              <svg viewBox="0 0 40 40" fill="none">
+                <circle cx="14" cy="15" r="5" stroke="currentColor" stroke-width="2.2" />
+                <circle cx="26" cy="15" r="5" stroke="currentColor" stroke-width="2.2" />
+                <path
+                  d="M7 30c1.2-4.2 4.2-6.5 7-6.5s5.8 2.3 7 6.5"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M19 30c1.2-4.2 4.2-6.5 7-6.5s5.8 2.3 7 6.5"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            )}
+            {pillar.icon === 'learn' && (
+              <svg viewBox="0 0 40 40" fill="none">
+                <path
+                  d="M8 16l12-6 12 6-12 6-12-6z"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linejoin="round"
+                />
+                <path d="M14 19.5v6.5c0 1.8 2.7 3.5 6 3.5s6-1.7 6-3.5v-6.5" stroke="currentColor" stroke-width="2.2" />
+              </svg>
+            )}
+          </span>
+          <h2>{pillar.title}</h2>
+          <p>{pillar.text}</p>
+        </div>
+      ))}
+    </div>
   </section>
 
-  <section>
-    <h2>Peak Hunt Challenge</h2>
-    <p>Das Konzept ist einfach:</p>
-    <p>Ihr legt Gipfel oder markante Wegpunkte mit unterschiedlichen Schwierigkeitsgraden in euerem Fluggebiet fest.</p>
-    <p>Die Aufgabe für die Mitglieder: Alle Ziele während der Saison oder einer definierten Zeit abfliegen oder zu Fuß erreichen und dabei Punkte, Bonuspunkte und Badges sammeln.</p>
-    <p>Wer am meisten Punkte gesammelt hat, ist ganz oben am Leaderboard. Los gehts!</p>
-    <p><a href="/challenges">Punktesystem und Regeln ansehen</a></p>
+  <section class="testimonials-section">
+    <div class="testimonial-grid">
+      {testimonials.map((t) => (
+        <figure class="testimonial-card">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <blockquote>{t.quote}</blockquote>
+          <figcaption>
+            <strong>{t.name}</strong>
+            <span>{t.role}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
   </section>
 
-  <section>
-    <h2>Clubmeisterschaft</h2>
-    <p>
-      Es hat sich in mehreren Clubs bewährt das Gipfel sammeln als Clubmeisterschaft, oder als Teil
-      dieser auszuschreiben. Das gibt zusätzliche Motivation für die Mitglieder - und durch die
-      automatische Auswertung keinen Aufwand für Sportwart und Vorstandsmitglieder.
-    </p>
+  <section class="feature-block" id="peak-hunt">
+    <div class="card feature-row">
+      <div class="feature-copy">
+        <span class="eyebrow">Challenges</span>
+        <h2>Peak Hunt Challenge</h2>
+        <p>Das Konzept ist einfach: Ihr legt Gipfel oder markante Wegpunkte mit unterschiedlichen Schwierigkeitsgraden in eurem Fluggebiet fest.</p>
+        <p>
+          Die Aufgabe für die Mitglieder: Alle Ziele während der Saison oder einer definierten Zeit
+          abfliegen oder zu Fuß erreichen und dabei Punkte, Bonuspunkte und Badges sammeln.
+        </p>
+        <p>Wer am meisten Punkte gesammelt hat, ist ganz oben am Leaderboard. Los geht’s!</p>
+        <a class="cta-yellow" href="/challenges">Starte jetzt deine Challenge!</a>
+      </div>
+      <div class="feature-visual">
+        <PhonePair
+          front={shotChallengeB}
+          back={shotChallengeA}
+          frontAlt="Voralpen Cup Challenge in der Sidekik App"
+          backAlt="Peak-Karte der Club Challenge"
+        />
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Club Profil</h2>
-    <p>Jeder Club hat sein eigenes Profil in der App.</p>
-    <p>Club-Challenges und Leaderboards sind direkt aus dem Profil aufrufbar.</p>
-    <p>Im Club-Profil können bis zu 3 regionale Sponsoren eingebunden werden.</p>
+  <section class="feature-block" id="clubmeisterschaft">
+    <div class="card feature-row feature-row-flip">
+      <div class="feature-visual feature-visual-photo">
+        <Image
+          src={clubmeisterschaft}
+          alt="Start zum Flug: Gleitschirm startet von einem verschneiten Berghang bei Sonnenuntergang"
+          class="photo-shot"
+          width={640}
+        />
+      </div>
+      <div class="feature-copy">
+        <span class="eyebrow">Wettkampf</span>
+        <h2>Clubmeisterschaft</h2>
+        <p>
+          Es hat sich in mehreren Clubs bewährt, das Gipfel sammeln als Clubmeisterschaft – oder als
+          Teil dieser – auszuschreiben.
+        </p>
+        <p>
+          Das gibt zusätzliche Motivation für die Mitglieder. Und durch die automatische Auswertung
+          keinen Aufwand für Sportwart und Vorstandsmitglieder.
+        </p>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Leaderboards</h2>
-    <p>Wir lieben es, uns mit den Kolleg:innen zu messen - und zu schauen wie wir abschneiden.</p>
-    <p>Viele verschiedene Leaderboards:</p>
-    <ul>
-      <li>Summe XC Strecke</li>
-      <li>Summe Airtime</li>
-      <li>Max. FAI-Strecke</li>
-      <li>Max. Höhenmeter Hiking</li>
-      <li>Max. Höhenmeter Flying</li>
-      <li>Summe Höhenmeter Hiking</li>
-      <li>Summe Höhenmeter Flying</li>
-      <li>Anzahl der Flüge</li>
-      <li>etc.</li>
-    </ul>
+  <section class="feature-block" id="profil">
+    <div class="card feature-row">
+      <div class="feature-copy">
+        <span class="eyebrow">Community</span>
+        <h2>Club Profil</h2>
+        <p>Jeder Club hat sein eigenes Profil in der App.</p>
+        <p>Club-Challenges und Leaderboards sind direkt aus dem Profil aufrufbar.</p>
+        <p>Im Club-Profil können bis zu 3 regionale Sponsoren eingebunden werden.</p>
+      </div>
+      <div class="feature-visual">
+        <PhonePair
+          front={shotClubB}
+          back={shotClubA}
+          frontAlt="Club-Profil von Cumulus Paragleiter Eisenwurzen"
+          backAlt="Club-Profil von Parateam Virgen"
+        />
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Flugaufgaben und Wettbewerbe</h2>
-    <p>
-      Erstellt Flugaufgaben für Tages-Wettbewerbe oder ganze Saisonen – ohne die Komplexität von
-      FAI-Regeln, Leading Points oder ähnlichem. Ideal für Hobby- und Gelegenheitspilot*innen.
-    </p>
+  <section class="feature-block" id="leaderboards">
+    <div class="card feature-row feature-row-flip">
+      <div class="feature-visual">
+        <PhonePair
+          front={shotLeaderboardB}
+          back={shotLeaderboardA}
+          frontAlt="Club-Leaderboard nach maximaler Höhe"
+          backAlt="Club-Leaderboard nach maximaler FAI-Strecke"
+        />
+      </div>
+      <div class="feature-copy">
+        <span class="eyebrow">Rankings</span>
+        <h2>Leaderboards</h2>
+        <p>Wir lieben es, uns mit den Kolleg:innen zu messen – und zu schauen, wie wir abschneiden.</p>
+        <p>Viele verschiedene Leaderboards:</p>
+        <ul class="feature-list">
+          {leaderboards.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Club-Segmente</h2>
-    <p>
-      Segmente verwandeln bekannte Strecken in club-interne Rennabschnitte mit Start- und
-      Ziellinie. Zeiten, Linienwahl und Performance werden sichtbar und machen den direkten
-      Vergleich innerhalb des Clubs möglich.
-    </p>
-    <Image
-      src={clubSegments}
-      alt="Sidekik Club-Segmente: club-interne Rennabschnitte mit Zeiten und Ranking"
-      loading="lazy"
-      class="section-img"
-      width={720}
-      densities={[1, 2]}
-    />
+  <section class="feature-block" id="tasks">
+    <div class="card feature-row">
+      <div class="feature-copy">
+        <span class="eyebrow">Tasks</span>
+        <h2>Flugaufgaben und Wettbewerbe</h2>
+        <p>
+          Erstellt Flugaufgaben für Tages-Wettbewerbe oder ganze Saisonen – ohne die Komplexität von
+          FAI-Regeln, Leading Points oder ähnlichem. Ideal für Hobby- und Gelegenheitspilot*innen.
+        </p>
+      </div>
+      <div class="feature-visual">
+        <PhonePair
+          front={shotTaskB}
+          back={shotTaskA}
+          frontAlt="Flugaufgabe Parateam Interne mit Auswertung"
+          backAlt="Task-Karte mit Wendepunkten"
+        />
+      </div>
+    </div>
   </section>
 
-  <section class="pricing">
+  <section class="feature-block" id="segmente">
+    <div class="card feature-row feature-row-flip">
+      <div class="feature-visual">
+        <Image
+          src={shotSegment}
+          alt="Club-Segment mit Karte, Filter und Bestzeiten"
+          class="shot-segment"
+          width={540}
+        />
+      </div>
+      <div class="feature-copy">
+        <span class="eyebrow">Segmente</span>
+        <h2>Club-Segmente</h2>
+        <p>
+          Segmente verwandeln bekannte Strecken in club-interne Rennabschnitte mit Start- und
+          Ziellinie. Zeiten, Linienwahl und Performance werden sichtbar und machen den direkten
+          Vergleich innerhalb des Clubs möglich.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing-section" id="preise">
     <h2>Preisgestaltung</h2>
     <div class="pricing-grid">
-      <div class="plan">
-        <h3>CLUB Free</h3>
-        <p class="plan-sub">Kostenlos starten</p>
-        <p class="plan-price">€ 0,00</p>
-        <ul>
-          <li>Club Profil erstellen und verwalten</li>
-          <li>Bis zu 20 registrierte Mitglieder</li>
-          <li>1 Club-Challenge im Jahr</li>
-        </ul>
-        <p><a class="cta-button" href="/clubs">Loslegen</a></p>
-      </div>
-      <div class="plan">
-        <h3>CLUB Silver</h3>
-        <p class="plan-sub">Für wachsende Vereine</p>
-        <p class="plan-price">€ 9,92 / Monat</p>
-        <p class="plan-annual">jährliches Abo € 119,-</p>
-        <ul>
-          <li>Club Profil erstellen und verwalten</li>
-          <li>Bis zu 50 registrierte Mitglieder</li>
-          <li>Unlimitiert Club-Challenges</li>
-          <li>Club Leaderboards</li>
-          <li>Verifiziert Badge</li>
-        </ul>
-        <p><a class="cta-button" href="mailto:hi@sidekik.cloud">Jetzt Anfragen</a></p>
-      </div>
-      <div class="plan">
-        <h3>CLUB Gold</h3>
-        <p class="plan-sub">Für Vereine, die mehr wollen</p>
-        <p class="plan-price">€ 23,95 / Monat</p>
-        <p class="plan-annual">jährliches Abo € 279,-</p>
-        <ul>
-          <li>Alles von Club Silver</li>
-          <li>Bis zu 100 Mitglieder</li>
-          <li>Sponsor-Anzeige auf der Clubseite*</li>
-          <li>Option für öffentliche Challenges</li>
-          <li>Eigene Tasks für Wettbewerbe</li>
-          <li>Speed-Sections (Segmente)</li>
-          <li>Goldenes Verifiziert-Badge</li>
-        </ul>
-        <p><a class="cta-button" href="mailto:hi@sidekik.cloud">Jetzt Anfragen</a></p>
-      </div>
-      <div class="plan">
+      {plans.map((plan) => (
+        <article class="plan">
+          <h3>{plan.name}</h3>
+          <p class="plan-sub">{plan.sub}</p>
+          <p class="plan-price">
+            {plan.price}
+            {plan.period && <span>{plan.period}</span>}
+          </p>
+          {plan.note && <p class="plan-note">{plan.note}</p>}
+          <ul>
+            {plan.features.map((item) => (
+              <li>
+                <span class="check" aria-hidden="true">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <a class="cta-button plan-cta" href={plan.href}>{plan.cta}</a>
+        </article>
+      ))}
+    </div>
+
+    <div class="addon">
+      <div>
         <h3>Member Zusatzpaket</h3>
-        <p class="plan-price">€ 1,00 pro User pro Jahr</p>
-        <p class="plan-annual">jährliches Abo € 50,-</p>
-        <p>Zusätzlich 50 Mitglieder einladen und verwalten.</p>
-        <p>Beliebig oft erweiterbar. Anwendbar auf Silver und Gold.</p>
-        <p><a class="cta-button" href="mailto:hi@sidekik.cloud">Jetzt Anfragen</a></p>
+        <p>
+          Zusätzlich 50 Mitglieder einladen und verwalten. Beliebig oft erweiterbar – anwendbar auf
+          Silver und Gold.
+        </p>
+      </div>
+      <div class="addon-price">
+        <strong>€ 1,00</strong>
+        <span>pro User / Jahr · Abo € 50,–</span>
+        <a class="cta-button" href="mailto:hi@sidekik.cloud">Jetzt anfragen</a>
       </div>
     </div>
-    <p class="pricing-note">
-      alle Preise sind inkl. 20% USt.
-      Für die Mitglieder ist die Teilnahme an der Challenge kostenfrei. Es gibt für die Piloten
-      Zusatz-Features in einem <a href="/subscription">PLUS Abo</a>, aber dieses ist für die
-      Teilnahme bei der Challenge keinerlei Voraussetzung.
+
+    <p class="pricing-legal">
+      Alle Preise sind inkl. 20% USt. Für die Mitglieder ist die Teilnahme an der Challenge
+      kostenfrei. Es gibt für die Piloten Zusatz-Features in einem
+      <a href="/subscription">PLUS Abo</a>, aber dieses ist für die Teilnahme bei der Challenge
+      keinerlei Voraussetzung.
     </p>
-    <p class="pricing-note">
-      * Einige Clubs lassen sich die Club Mitgliedschaft von regionalen Sponsoren re-finanzieren.
+    <p class="pricing-legal">
+      * Einige Clubs lassen sich die Club-Mitgliedschaft von regionalen Sponsoren re-finanzieren.
       Bis zu 3 Sponsoren-Logos möglich.
     </p>
   </section>
 
-  <section class="cta-section">
-    <h2>Starte dein Abenteuer!</h2>
-    <p>Lade die kostenlose Sidekik App herunter</p>
-    <p class="rating">⭐ 4.8 Rating, Join 2500+ Pilots</p>
-    <p><a class="cta-button" href="https://app.sidekik.cloud/signup">App herunterladen</a></p>
+  <section class="cta-section full-bleed">
+    <Image src={ctaSky} alt="" class="cta-bg" width={1024} aria-hidden="true" />
+    <div class="cta-panel">
+      <h2>Starte dein Abenteuer!</h2>
+      <p>Jetzt kostenlos herunterladen.</p>
+      <StoreBadges />
+      <p class="rating-line">
+        <span class="star" aria-hidden="true">★</span> 4.8 Rating, Join 2500+ Pilots
+      </p>
+    </div>
   </section>
 </Layout>
 
 <style>
-  .hero { padding: 3rem 0 1rem; }
-  .hero h1 { font-size: 2.2rem; }
-  .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 640px; }
-  .social-proof { font-weight: 600; color: var(--color-muted); }
-  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
-  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; }
-  .plan { border: 1px solid var(--color-border); border-radius: 12px; padding: 1.25rem; }
-  .plan-sub { color: var(--color-muted); margin: 0.1rem 0; }
-  .plan-price { font-size: 1.4rem; font-weight: 800; margin: 0.4rem 0 0; }
-  .plan-annual { color: var(--color-muted); font-size: 0.85rem; margin: 0 0 0.75rem; }
-  .pricing-note { font-size: 0.85rem; color: var(--color-muted); }
-  .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
-  .rating { color: var(--color-muted); font-size: 0.9rem; }
-  .section-img { max-width: 360px; border-radius: 12px; margin-top: 1rem; }
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .full-bleed-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 48px);
+  }
+
+  .accent {
+    color: var(--color-primary);
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border-radius: 22px;
+    padding: clamp(22px, 3vw, 36px);
+  }
+
+  h2 {
+    font-size: clamp(28px, 4.4vw, 38px);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  /* Hero */
+  .hero {
+    background: #000;
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: clamp(56px, 8vw, 96px);
+    padding-bottom: clamp(48px, 8vw, 80px);
+  }
+
+  .hero-relief {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    width: min(780px, 92vw);
+    max-width: none;
+    opacity: 0.45;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, #000 40%, transparent 72%);
+  }
+
+  .hero-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 760px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5.2vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .hero .lead {
+    font-size: clamp(16px, 2vw, 18px);
+    line-height: 1.55;
+    color: #c8c8c8;
+    margin: 0;
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .logo-label {
+    position: relative;
+    margin: 36px 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9ba5b4;
+  }
+
+  .logo-row {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(16px, 3vw, 36px);
+    width: 100%;
+    max-width: 920px;
+  }
+
+  .club-logo {
+    height: 52px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+  }
+
+  /* Pillars */
+  .pillars-section {
+    margin: 0;
+    padding-top: clamp(8px, 2vw, 16px);
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .pillar {
+    background: var(--color-surface);
+    border-radius: 20px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pillar-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-primary);
+  }
+
+  .pillar-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .pillar h2 {
+    font-size: 22px;
+    text-transform: none;
+  }
+
+  .pillar p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  /* Testimonials */
+  .testimonials-section {
+    margin: 0;
+    padding-top: clamp(16px, 3vw, 28px);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .testimonial-card {
+    margin: 0;
+    background: var(--color-surface);
+    border-radius: 20px;
+    padding: 24px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quote-mark {
+    font-family: var(--font-display);
+    font-size: 64px;
+    line-height: 0.7;
+    color: #ffc400;
+    font-weight: 800;
+  }
+
+  .testimonial-card blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-text);
+    text-wrap: pretty;
+  }
+
+  .testimonial-card figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .testimonial-card figcaption strong {
+    color: var(--color-text);
+    font-size: 15px;
+  }
+
+  /* Feature rows */
+  .feature-block {
+    padding-top: clamp(16px, 3vw, 28px);
+    margin: 0;
+  }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+  }
+
+  .feature-row-flip {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+
+  .feature-row-flip .feature-visual {
+    order: -1;
+  }
+
+  .feature-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .feature-copy h2 {
+    font-size: clamp(26px, 3.6vw, 34px);
+    text-wrap: balance;
+  }
+
+  .feature-copy p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+
+  .feature-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .feature-list li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .feature-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+    background: var(--color-primary);
+  }
+
+  .cta-yellow {
+    display: inline-block;
+    background: #e7f25a;
+    color: #0e1116;
+    padding: 0.85rem 1.45rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 15px;
+    margin-top: 6px;
+  }
+
+  .cta-yellow:hover {
+    background: #d6e24a;
+    color: #0e1116;
+  }
+
+  .feature-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    padding: 0;
+  }
+
+  .feature-visual-photo {
+    padding: 0;
+  }
+
+  .photo-shot {
+    width: 100%;
+    height: clamp(340px, 52vw, 520px);
+    object-fit: cover;
+    object-position: center 40%;
+    display: block;
+    border-radius: 18px;
+    box-shadow: 0 18px 28px rgba(14, 17, 22, 0.18);
+  }
+
+  .shot-segment {
+    width: min(460px, 100%);
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 18px 28px rgba(14, 17, 22, 0.18));
+  }
+
+  /* Pricing */
+  .pricing-section {
+    margin: 0;
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+
+  .pricing-section > h2 {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .plan {
+    background: var(--color-surface);
+    border-radius: 22px;
+    padding: 28px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .plan h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .plan-sub {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 14px;
+  }
+
+  .plan-price {
+    margin: 10px 0 0;
+    font-size: 32px;
+    font-weight: 800;
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .plan-price span {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-muted);
+  }
+
+  .plan-note {
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .plan ul {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .plan li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .check {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    border-radius: 99px;
+    background: #e4f8ea;
+    color: #1a9a4a;
+    font-size: 11px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .plan-cta,
+  .addon-price .cta-button {
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 999px;
+    width: 100%;
+    background: var(--color-primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.7rem 1.4rem;
+    box-sizing: border-box;
+  }
+
+  .plan-cta:hover,
+  .addon-price .cta-button:hover {
+    background: var(--color-primary-dark);
+    color: #fff;
+  }
+
+  .addon {
+    margin-top: 16px;
+    background: var(--color-surface);
+    border-radius: 22px;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .addon h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+  }
+
+  .addon p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 15px;
+    max-width: 520px;
+  }
+
+  .addon-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex: 0 0 auto;
+  }
+
+  .addon-price strong {
+    font-size: 24px;
+    font-family: var(--font-display);
+  }
+
+  .addon-price span {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  .addon-price .cta-button {
+    width: auto;
+    margin-top: 4px;
+  }
+
+  .pricing-legal {
+    font-size: 13px;
+    color: var(--color-muted);
+    max-width: 820px;
+    margin: 16px auto 0;
+    text-align: center;
+    line-height: 1.55;
+  }
+
+  /* CTA */
+  .cta-section {
+    margin-top: clamp(40px, 6vw, 64px);
+    margin-bottom: 0;
+    position: relative;
+    min-height: clamp(380px, 48vw, 520px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-ink);
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+
+  .cta-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--color-ink);
+    color: #fff;
+    border-radius: 24px;
+    padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    max-width: 520px;
+    margin: clamp(32px, 5vw, 56px) 20px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .cta-section p {
+    margin: 0;
+    font-size: 17px;
+    color: #9ba5b4;
+  }
+
+  .rating-line {
+    margin: 4px 0 0;
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .rating-line .star {
+    color: #ffc400;
+    margin-right: 4px;
+  }
+
+  @media (max-width: 960px) {
+    .pricing-grid,
+    .pillars,
+    .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-row,
+    .feature-row-flip {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-row-flip .feature-visual {
+      order: 0;
+    }
+
+    .addon {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .addon-price {
+      align-items: flex-start;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .club-logo {
+      height: 40px;
+      max-width: 110px;
+    }
+
+    .photo-shot {
+      height: 280px;
+    }
+  }
 </style>

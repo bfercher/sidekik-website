@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  front: ImageMetadata;
+  back?: ImageMetadata;
+  frontAlt: string;
+  backAlt?: string;
+  eager?: boolean;
+  smallBack?: boolean;
+  cards?: boolean;
+  dark?: boolean;
+}
+
+const { front, back, frontAlt, backAlt = '', eager = false, smallBack = false, cards = false, dark = false } = Astro.props;
+---
+
+<div class:list={['phone-pair', { 'phone-pair-single': !back, 'phone-pair-small-back': smallBack, 'phone-pair-cards': cards, 'phone-pair-dark': dark }]}>
+  {back && (
+    <div class="phone phone-back">
+      <Image
+        src={back}
+        alt={backAlt}
+        widths={[280, 420]}
+        sizes="200px"
+        loading={eager ? 'eager' : 'lazy'}
+      />
+    </div>
+  )}
+  <div class="phone phone-front">
+    <Image
+      src={front}
+      alt={frontAlt}
+      widths={[300, 480, 640]}
+      sizes="260px"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+    />
+  </div>
+</div>
+
+<style>
+  .phone-pair {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0;
+  }
+
+  .phone {
+    position: relative;
+    width: min(220px, 38vw);
+    flex: 0 0 auto;
+    line-height: 0;
+  }
+
+  .phone img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 18px 28px rgba(14, 17, 22, 0.18));
+  }
+
+  .phone-pair-dark .phone img {
+    filter: drop-shadow(0 22px 48px rgba(0, 0, 0, 0.55));
+  }
+
+  .phone-back {
+    margin-right: -12%;
+    z-index: 1;
+  }
+
+  .phone-front {
+    z-index: 2;
+    margin-top: 40px;
+  }
+
+  .phone-pair-small-back .phone-back {
+    width: min(188px, 32vw);
+    margin-right: -16%;
+    margin-top: 8px;
+  }
+
+  .phone-pair-small-back .phone-front {
+    width: min(248px, 44vw);
+    margin-top: 56px;
+  }
+
+  .phone-pair-cards.phone-pair-small-back .phone-back {
+    width: min(176px, 30vw);
+    margin-right: -20%;
+    margin-top: 0;
+  }
+
+  .phone-pair-cards.phone-pair-small-back .phone-front {
+    width: min(236px, 42vw);
+    margin-top: 72px;
+  }
+
+  .phone-pair-single .phone-front {
+    width: min(260px, 56vw);
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  @media (max-width: 860px) {
+    .phone {
+      width: min(200px, 44vw);
+    }
+
+    .phone-pair-small-back .phone-back {
+      width: min(164px, 36vw);
+    }
+
+    .phone-pair-small-back .phone-front {
+      width: min(220px, 50vw);
+      margin-top: 40px;
+    }
+
+    .phone-pair-cards.phone-pair-small-back .phone-back {
+      width: min(152px, 34vw);
+    }
+
+    .phone-pair-cards.phone-pair-small-back .phone-front {
+      width: min(210px, 48vw);
+      margin-top: 56px;
+    }
+
+    .phone-pair-single .phone-front {
+      width: min(240px, 62vw);
+    }
+  }
+</style>

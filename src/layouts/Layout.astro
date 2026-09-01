@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Analytics from '../components/Analytics.astro';
 import { ORGANIZATION, SITE_URL, absoluteUrl, getAlternates } from '../lib/seo';
+import logo from '../assets/brand/sidekik-logo.png';
 
 interface Props {
   title: string;
@@ -13,6 +15,8 @@ interface Props {
   jsonLd?: Record<string, unknown>;
   /** Overrides the default social preview image. Paths are made absolute. */
   ogImage?: { src: string; width: number; height: number };
+  /** Drop the gap above the footer (for pages that end in a full-bleed section). */
+  flushFooter?: boolean;
 }
 
 const {
@@ -24,11 +28,24 @@ const {
   publishedTime,
   jsonLd,
   ogImage,
+  flushFooter = false,
 } = Astro.props;
 
 const canonicalURL = absoluteUrl(path);
 const alternates = getAlternates(path);
 const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
+const current = path.replace(/\/$/, '') || '/';
+
+const nav = [
+  { href: '/', label: 'Home' },
+  { href: '/features', label: 'Features' },
+  { href: '/clubs', label: 'Für Clubs' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/about', label: 'About' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
 
 // Crawlers do not resolve relative URLs, so the image is always absolute.
 const DEFAULT_OG_IMAGE = { src: '/images/social/og-default.png', width: 1200, height: 630 };
@@ -51,6 +68,12 @@ const organizationSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
@@ -89,14 +112,17 @@ const organizationSchema = {
 
     <style>
       :root {
-        --color-bg: #ffffff;
-        --color-text: #1a1a1a;
-        --color-muted: #5f6b76;
-        --color-primary: #ff6a3d;
-        --color-primary-dark: #e0552b;
-        --color-border: #e7e7e7;
-        --color-surface: #f7f7f8;
-        --max-width: 1080px;
+        --color-bg: #eef2f7;
+        --color-surface: #ffffff;
+        --color-text: #0e1116;
+        --color-muted: #5a6472;
+        --color-primary: #ff2d78;
+        --color-primary-dark: #e0155e;
+        --color-border: #dde3ec;
+        --color-ink: #0e1116;
+        --color-ink-soft: #171c24;
+        --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+        --max-width: 1180px;
         color-scheme: light;
       }
 
@@ -113,8 +139,8 @@ const organizationSchema = {
       body {
         background: var(--color-bg);
         color: var(--color-text);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-          sans-serif;
+        font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Helvetica, Arial, sans-serif;
         line-height: 1.6;
       }
 
@@ -134,11 +160,9 @@ const organizationSchema = {
       }
 
       header.site-header {
-        border-bottom: 1px solid var(--color-border);
         position: sticky;
         top: 0;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(6px);
+        background: #000;
         z-index: 10;
       }
 
@@ -146,25 +170,26 @@ const organizationSchema = {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.9rem 1.25rem;
-        max-width: var(--max-width);
+        padding: 1.05rem 1.5rem;
+        max-width: 1240px;
         margin: 0 auto;
-        gap: 1rem;
-        flex-wrap: wrap;
+        gap: 1.25rem;
       }
 
-      .logo {
-        font-weight: 800;
-        font-size: 1.25rem;
-        text-decoration: none;
-        color: var(--color-text);
-        letter-spacing: -0.02em;
+      .logo-mark {
+        display: block;
+        height: 28px;
+        width: auto;
+      }
+
+      nav.main-nav {
+        margin-left: auto;
       }
 
       nav.main-nav ul {
         list-style: none;
         display: flex;
-        gap: 1.25rem;
+        gap: 1.75rem;
         margin: 0;
         padding: 0;
         flex-wrap: wrap;
@@ -172,13 +197,49 @@ const organizationSchema = {
 
       nav.main-nav a {
         text-decoration: none;
-        color: var(--color-text);
+        color: #fff;
         font-weight: 500;
         font-size: 0.95rem;
       }
 
       nav.main-nav a:hover {
-        color: var(--color-primary-dark);
+        color: #fff;
+        opacity: 0.8;
+      }
+
+      nav.main-nav a[aria-current='page'] {
+        color: var(--color-primary);
+        opacity: 1;
+      }
+
+      .nav-toggle-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+
+      .nav-toggle {
+        display: none;
+        appearance: none;
+        border: 1px solid #2a3240;
+        background: transparent;
+        color: #fff;
+        border-radius: 8px;
+        padding: 0.4rem 0.6rem;
+        font-size: 1rem;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .nav-toggle-input:focus-visible ~ .nav-toggle {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      .nav-toggle {
+        margin-left: 0;
       }
 
       main {
@@ -187,41 +248,67 @@ const organizationSchema = {
 
       footer.site-footer {
         margin-top: 4rem;
-        border-top: 1px solid var(--color-border);
-        background: var(--color-surface);
-        padding: 2.5rem 0 2rem;
+        background: #080b0f;
+        color: #9ba5b4;
+        padding: 3rem 0 2rem;
+      }
+
+      footer.site-footer.flush {
+        margin-top: 0;
       }
 
       .footer-inner {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        gap: 2rem;
+        gap: 2.5rem;
+      }
+
+      .footer-brand-col {
+        max-width: 260px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .footer-cols {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-col {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .footer-col-title {
+        color: #4e5866;
+        font-size: 0.85rem;
       }
 
       .footer-links {
         list-style: none;
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem 1.25rem;
+        flex-direction: column;
+        gap: 0.55rem;
         margin: 0;
         padding: 0;
       }
 
       .footer-links a {
         text-decoration: none;
-        color: var(--color-muted);
+        color: #d6dce4;
         font-size: 0.9rem;
       }
 
       .footer-links a:hover {
-        color: var(--color-primary-dark);
+        color: #fff;
       }
 
       .footer-brand {
-        font-weight: 700;
-        color: var(--color-text);
-        text-decoration: none;
+        display: inline-block;
       }
 
       .copyright {
@@ -230,22 +317,29 @@ const organizationSchema = {
         color: var(--color-muted);
       }
 
+      footer.site-footer .copyright {
+        color: #4e5866;
+      }
+
       .cta-button {
         display: inline-block;
         background: var(--color-primary);
         color: #fff;
         padding: 0.7rem 1.4rem;
-        border-radius: 999px;
+        border-radius: 10px;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
       }
 
       .cta-button:hover {
         background: var(--color-primary-dark);
+        color: #fff;
       }
 
       h1, h2, h3 {
-        line-height: 1.25;
+        line-height: 1.15;
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
       }
 
       section {
@@ -271,10 +365,44 @@ const organizationSchema = {
         font-style: italic;
       }
 
-      @media (max-width: 640px) {
-        .nav-inner {
+      @media (max-width: 860px) {
+        .nav-toggle {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: auto;
+        }
+
+        nav.main-nav {
+          display: none;
+          width: 100%;
+          order: 4;
+          margin-left: 0;
+        }
+
+        nav.main-nav ul {
           flex-direction: column;
-          align-items: flex-start;
+          gap: 0;
+          padding: 0.5rem 0 0.75rem;
+        }
+
+        nav.main-nav a {
+          display: block;
+          padding: 0.6rem 0;
+        }
+
+        .nav-inner {
+          flex-wrap: wrap;
+        }
+
+        header.site-header:has(.nav-toggle-input:checked) nav.main-nav {
+          display: block;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .footer-inner {
+          flex-direction: column;
         }
       }
     </style>
@@ -282,15 +410,20 @@ const organizationSchema = {
   <body>
     <header class="site-header">
       <div class="nav-inner">
-        <a class="logo" href="/">Sidekik</a>
-        <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="/" aria-label="Sidekik Startseite">
+          <Image src={logo} alt="Sidekik" class="logo-mark" width={140} loading="eager" />
+        </a>
+        <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input" />
+        <label class="nav-toggle" for="nav-toggle-input" aria-label="Menü öffnen">☰</label>
+        <nav class="main-nav" aria-label="Hauptnavigation" id="main-nav">
           <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/features">Features</a></li>
-            <li><a href="/clubs">Clubs</a></li>
-            <li><a href="/challenges">Challenges</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/about">About</a></li>
+            {nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>
@@ -300,22 +433,43 @@ const organizationSchema = {
       <slot />
     </main>
 
-    <footer class="site-footer">
+    <footer class:list={['site-footer', { flush: flushFooter }]}>
       <div class="wrap footer-inner">
-        <div>
-          <a class="footer-brand" href="/">Sidekik</a>
-          <p class="copyright">Die App für Gleitschirmpiloten und Clubs.</p>
+        <div class="footer-brand-col">
+          <a class="footer-brand" href="/">
+            <Image src={logo} alt="Sidekik" width={120} />
+          </a>
+          <p>Die App für Gleitschirmpiloten, Hike&amp;Fly und Clubs.</p>
         </div>
-        <ul class="footer-links">
-          <li><a href="/challenges">Challenges</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="https://www.instagram.com/sidekik_paragliding/" rel="noopener">Folge uns auf Instagram</a></li>
-          <li><a href="mailto:hi@sidekik.cloud">Kontaktiere uns</a></li>
-          <li><a href="/nutzungsbedingungen">Nutzungsbedingungen</a></li>
-          <li><a href="/datenschutzrichtlinie">Datenschutzrichtlinie</a></li>
-          <li><a href="/impressum">Impressum</a></li>
-          <li><a href="/account-loeschen">Account Löschen</a></li>
-        </ul>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <span class="footer-col-title">Produkt</span>
+            <ul class="footer-links">
+              <li><a href="/features">Features</a></li>
+              <li><a href="/clubs">Für Clubs</a></li>
+              <li><a href="/challenges">Challenges</a></li>
+              <li><a href="/subscription">Abo</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <span class="footer-col-title">Mehr</span>
+            <ul class="footer-links">
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="https://www.instagram.com/sidekik_paragliding/" rel="noopener">Instagram</a></li>
+              <li><a href="mailto:hi@sidekik.cloud">Kontakt</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <span class="footer-col-title">Rechtliches</span>
+            <ul class="footer-links">
+              <li><a href="/nutzungsbedingungen">Nutzungsbedingungen</a></li>
+              <li><a href="/datenschutzrichtlinie">Datenschutz</a></li>
+              <li><a href="/impressum">Impressum</a></li>
+              <li><a href="/account-loeschen">Account löschen</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div class="wrap">
         <p class="copyright">&copy; {new Date().getFullYear()} Sidekik GmbH. Alle Rechte vorbehalten.</p>
