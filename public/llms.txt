@@ -1,0 +1,27 @@
+# Sidekik
+
+> Sidekik is a free iOS and Android app for paraglider pilots. Track Hike&Fly and XC flights, join Peak Hunt club challenges, see Livewind on the map, and follow friends. It works with XContest, Garmin, Suunto, and IGC/GPX; it does not replace a flight instrument.
+
+Sidekik is made by Sidekik GmbH (Austria). The basic app is free; extra features are available with Sidekik PLUS. Clubs can run Peak Hunt challenges, tasks and leaderboards. 2,500+ pilots and 200+ clubs use it. Store rating: 4.7 / 5 from 158 reviews.
+
+## Pages
+
+- [Home (German)](https://www.sidekik.cloud/): default marketing site
+- [Home (English)](https://www.sidekik.cloud/en): English marketing site
+- [Features](https://www.sidekik.cloud/features): tracking, Livewind, On Air, stats, club challenges
+- [For clubs](https://www.sidekik.cloud/clubs): Peak Hunt, club championships, pricing
+- [Peak Hunt rules](https://www.sidekik.cloud/challenges): scoring, bonus points, safety
+- [PLUS](https://www.sidekik.cloud/subscription): paid features for pilots
+- [Blog](https://www.sidekik.cloud/blog): guides and updates (German listing; English at /en/blog)
+- [About](https://www.sidekik.cloud/about): mission and origin
+
+## App
+
+- [App Store](https://apps.apple.com/app/sidekik-paragliding-hike-fly/id6738481976)
+- [Google Play](https://play.google.com/store/apps/details?id=com.armadaar5org.sidekikapp)
+- Web app / signup: https://app.sidekik.cloud/signup
+
+## Contact
+
+- Email: hi@sidekik.cloud
+- Instagram: https://www.instagram.com/sidekik_paragliding/

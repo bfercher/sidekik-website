@@ -2,7 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
-import { ORGANIZATION, absoluteUrl } from '../../lib/seo';
+import { ORGANIZATION, absoluteUrl, localizedPath } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -97,7 +97,7 @@ const postSchema = {
     <div class="post-body">
       <Content />
     </div>
-    <p><a href="/blog">&larr; {lang === 'en' ? 'Back to blog' : 'Zurück zum Blog'}</a></p>
+    <p><a href={localizedPath(lang, '/blog')}>&larr; {lang === 'en' ? 'Back to blog' : 'Zurück zum Blog'}</a></p>
   </article>
 </Layout>
 

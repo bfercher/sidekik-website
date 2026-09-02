@@ -1,13 +1,14 @@
 ---
 import { Image } from 'astro:assets';
 import Analytics from '../components/Analytics.astro';
-import { APP, ORGANIZATION, SITE_URL, absoluteUrl, getAlternates } from '../lib/seo';
+import { APP, ORGANIZATION, SITE_URL, absoluteUrl, getAlternates, getSiblingPath, getTranslationPaths, type Lang } from '../lib/seo';
+import { chrome } from '../i18n/chrome';
 import logo from '../assets/brand/sidekik-logo.png';
 
 interface Props {
   title: string;
   description: string;
-  lang?: string;
+  lang?: Lang;
   path?: string; // e.g. "/features" - used for canonical URL
   ogType?: 'website' | 'article';
   publishedTime?: Date;
@@ -39,17 +40,13 @@ const alternates = getAlternates(path);
 const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
 const current = path.replace(/\/$/, '') || '/';
 const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
-
-const nav = [
-  { href: '/', label: 'Home' },
-  { href: '/features', label: 'Features' },
-  { href: '/clubs', label: 'Für Clubs' },
-  { href: '/blog', label: 'Blog' },
-  { href: '/about', label: 'About' },
-];
+const ui = chrome(lang);
+const otherLang: Lang = lang === 'en' ? 'de' : 'en';
+const otherHref = getSiblingPath(path, otherLang);
+const translationPaths = getTranslationPaths(path);
 
 const isActive = (href: string) =>
-  href === '/' ? current === '/' : current === href || current.startsWith(`${href}/`);
+  href === '/' || href === '/en' ? current === href : current === href || current.startsWith(`${href}/`);
 
 // Crawlers do not resolve relative URLs, so the image is always absolute.
 const DEFAULT_OG_IMAGE = { src: '/images/social/og-default.jpg', width: 1200, height: 630 };
@@ -70,10 +67,58 @@ const organizationSchema = {
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html
+  lang={lang}
+  data-page-lang={lang}
+  data-locale-de={translationPaths?.de}
+  data-locale-en={translationPaths?.en}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var de = root.getAttribute('data-locale-de');
+        var en = root.getAttribute('data-locale-en');
+        var current = root.getAttribute('data-page-lang');
+        if (!de || !en || !current) return;
+        if (/bot|crawl|spider|slurp|facebookexternalhit|bingpreview/i.test(navigator.userAgent)) return;
+
+        var stored;
+        try {
+          stored = localStorage.getItem('sidekik_lang');
+        } catch (e) {
+          stored = null;
+        }
+
+        var want;
+        if (stored === 'de' || stored === 'en') {
+          want = stored;
+        } else {
+          var langs = navigator.languages && navigator.languages.length
+            ? navigator.languages
+            : [navigator.language];
+          for (var i = 0; i < langs.length; i++) {
+            var tag = String(langs[i] || '').toLowerCase();
+            if (tag === 'en' || tag.indexOf('en-') === 0) {
+              want = 'en';
+              break;
+            }
+            if (tag === 'de' || tag.indexOf('de-') === 0) {
+              want = 'de';
+              break;
+            }
+          }
+          if (!want) want = 'de';
+        }
+
+        var target = want === 'en' ? en : de;
+        if (target && want !== current) {
+          location.replace(target);
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -322,10 +367,34 @@ const organizationSchema = {
         display: inline-block;
       }
 
-      .copyright {
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem 1.25rem;
         margin-top: 1.5rem;
+      }
+
+      .copyright {
+        margin: 0;
         font-size: 0.8rem;
         color: var(--color-muted);
+      }
+
+      .lang-switch {
+        text-decoration: none;
+        color: #d6dce4;
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        border: 1px solid #2a3240;
+        border-radius: 8px;
+        padding: 0.35rem 0.55rem;
+      }
+
+      .lang-switch:hover {
+        color: #fff;
       }
 
       footer.site-footer .copyright {
@@ -421,14 +490,14 @@ const organizationSchema = {
   <body>
     <header class="site-header">
       <div class="nav-inner">
-        <a href="/" aria-label="Sidekik Startseite">
+        <a href={ui.homeHref} aria-label={ui.homeAria}>
           <Image src={logo} alt="Sidekik" class="logo-mark" width={140} loading="eager" />
         </a>
         <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input" />
-        <label class="nav-toggle" for="nav-toggle-input" aria-label="Menü öffnen">☰</label>
-        <nav class="main-nav" aria-label="Hauptnavigation" id="main-nav">
+        <label class="nav-toggle" for="nav-toggle-input" aria-label={ui.menuAria}>☰</label>
+        <nav class="main-nav" aria-label={ui.navAria} id="main-nav">
           <ul>
-            {nav.map((item) => (
+            {ui.nav.map((item) => (
               <li>
                 <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
                   {item.label}
@@ -447,46 +516,68 @@ const organizationSchema = {
     <footer class:list={['site-footer', { flush: flushFooter }]}>
       <div class="wrap footer-inner">
         <div class="footer-brand-col">
-          <a class="footer-brand" href="/">
+          <a class="footer-brand" href={ui.homeHref}>
             <Image src={logo} alt="Sidekik" width={120} />
           </a>
-          <p>Die App für Gleitschirmpiloten, Hike&amp;Fly und Clubs.</p>
+          <p>{ui.footerTagline}</p>
         </div>
         <div class="footer-cols">
           <div class="footer-col">
-            <span class="footer-col-title">Produkt</span>
+            <span class="footer-col-title">{ui.productTitle}</span>
             <ul class="footer-links">
-              <li><a href="/features">Features</a></li>
-              <li><a href="/clubs">Für Clubs</a></li>
-              <li><a href="/challenges">Challenges</a></li>
-              <li><a href="/subscription">Abo</a></li>
+              {ui.product.map((item) => (
+                <li><a href={item.href}>{item.label}</a></li>
+              ))}
             </ul>
           </div>
           <div class="footer-col">
-            <span class="footer-col-title">Mehr</span>
+            <span class="footer-col-title">{ui.moreTitle}</span>
             <ul class="footer-links">
-              <li><a href="/blog">Blog</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="https://www.instagram.com/sidekik_paragliding/" rel="noopener">Instagram</a></li>
-              <li><a href="mailto:hi@sidekik.cloud">Kontakt</a></li>
+              {ui.more.map((item) => (
+                <li>
+                  <a href={item.href} rel={item.external ? 'noopener' : undefined}>{item.label}</a>
+                </li>
+              ))}
             </ul>
           </div>
           <div class="footer-col">
-            <span class="footer-col-title">Rechtliches</span>
+            <span class="footer-col-title">{ui.legalTitle}</span>
             <ul class="footer-links">
-              <li><a href="/nutzungsbedingungen">Nutzungsbedingungen</a></li>
-              <li><a href="/datenschutzrichtlinie">Datenschutz</a></li>
-              <li><a href="/impressum">Impressum</a></li>
-              <li><a href="/account-loeschen">Account löschen</a></li>
+              {ui.legal.map((item) => (
+                <li><a href={item.href}>{item.label}</a></li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
-      <div class="wrap">
-        <p class="copyright">&copy; {new Date().getFullYear()} Sidekik GmbH. Alle Rechte vorbehalten.</p>
+      <div class="wrap footer-bottom">
+        <p class="copyright">&copy; {new Date().getFullYear()} Sidekik GmbH. {ui.copyright}</p>
+        <a
+          class="lang-switch"
+          href={otherHref}
+          hreflang={otherLang}
+          lang={otherLang}
+          data-lang-pref={otherLang}
+        >
+          {ui.langSwitch}
+        </a>
       </div>
     </footer>
+    <script>
+      document.querySelector<HTMLAnchorElement>('.lang-switch')?.addEventListener('click', (event) => {
+        const pref = (event.currentTarget as HTMLAnchorElement).dataset.langPref;
+        if (pref === 'de' || pref === 'en') {
+          localStorage.setItem('sidekik_lang', pref);
+        }
+      });
+    </script>
 
-    <Analytics />
+    <Analytics
+      message={ui.cookie.message}
+      privacyHref={ui.cookie.privacyHref}
+      privacyLabel={ui.cookie.privacyLabel}
+      accept={ui.cookie.accept}
+      decline={ui.cookie.decline}
+    />
   </body>
 </html>

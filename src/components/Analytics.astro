@@ -4,6 +4,15 @@
 // client-side token, not a secret) to be set at build time. Defaults to
 // PostHog's EU Cloud host to match the "data stored within the EU" commitment
 // in the privacy policy; override with PUBLIC_POSTHOG_HOST if needed.
+interface Props {
+  message: string;
+  privacyHref: string;
+  privacyLabel: string;
+  accept: string;
+  decline: string;
+}
+
+const { message, privacyHref, privacyLabel, accept, decline } = Astro.props;
 const posthogKey = import.meta.env.PUBLIC_POSTHOG_KEY;
 const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog.com';
 ---
@@ -18,16 +27,15 @@ const posthogHost = import.meta.env.PUBLIC_POSTHOG_HOST || 'https://eu.i.posthog
       hidden
     >
       <p>
-        Wir verwenden PostHog, um zu verstehen, wie diese Website genutzt wird. Das hilft uns,
-        Sidekik zu verbessern. Mehr dazu in unserer
-        {' '}<a href="/datenschutzrichtlinie">Datenschutzrichtlinie</a>.
+        {message}
+        {' '}<a href={privacyHref}>{privacyLabel}</a>.
       </p>
       <div class="cookie-banner-actions">
         <button id="cookie-consent-decline" type="button" class="cookie-btn cookie-btn-secondary">
-          Ablehnen
+          {decline}
         </button>
         <button id="cookie-consent-accept" type="button" class="cookie-btn cookie-btn-primary">
-          Akzeptieren
+          {accept}
         </button>
       </div>
     </div>

@@ -1,0 +1,925 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import StoreBadges from '../StoreBadges.astro';
+import PhonePair from '../PhonePair.astro';
+import heroRelief from '../../assets/pages/hero-relief-bg.png';
+import trackingLive from '../../assets/pages/feature-tracking-live.png';
+import trackingStart from '../../assets/pages/feature-tracking-start.png';
+import clubSegments from '../../assets/pages/club-segments.png';
+import ctaSky from '../../assets/pages/feature-cta-sky.jpg';
+import heroFeed from '../../assets/pages/feature-feed.png';
+import { APP, SITE_URL, ratingLine, type Lang } from '../../lib/seo';
+import { home } from '../../i18n/home';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const copy = home(lang);
+
+// Declared on the homepage rather than sitewide because this is the page that
+// visibly shows the rating, which is a condition for the rating markup.
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: APP.name,
+  url: SITE_URL,
+  applicationCategory: 'SportsApplication',
+  operatingSystem: 'iOS, Android',
+  offers: [
+    { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: APP.stores.apple.url },
+    { '@type': 'Offer', price: '0', priceCurrency: 'EUR', url: APP.stores.google.url },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: APP.ratingValue,
+    bestRating: '5',
+    ratingCount: APP.ratingCount,
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: copy.faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<Layout
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  path={path}
+  jsonLd={[appSchema, faqSchema]}
+  flushFooter
+>
+  <section class="hero full-bleed" id="download">
+    <div class="full-bleed-inner hero-inner">
+      <Image src={heroRelief} alt=" " class="hero-relief" width={900} aria-hidden="true" />
+      <div class="hero-copy">
+        <h1>{copy.h1Before}<span class="accent">{copy.h1Accent}</span>{copy.h1After}</h1>
+        <p class="lead">{copy.lead}</p>
+        <p class="download-label">{copy.downloadLabel}</p>
+        <StoreBadges eager align="start" />
+        <p class="rating-line"><span class="star" aria-hidden="true">★</span> {ratingLine(lang)}</p>
+      </div>
+      <div class="hero-phones">
+        <PhonePair
+          front={trackingLive}
+          back={heroFeed}
+          frontAlt={copy.heroFrontAlt}
+          backAlt={copy.heroBackAlt}
+          smallBack
+          eager
+          dark
+        />
+      </div>
+    </div>
+    <div class="hero-edge" aria-hidden="true"></div>
+  </section>
+
+  <section class="why">
+    <h2>{copy.whyTitle}</h2>
+    <div class="why-grid">
+      {copy.whyPoints.map((point, i) => (
+        <div class="why-card">
+          <span class="why-index">{String(i + 1).padStart(2, '0')}</span>
+          <p>{point}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="definition" id="what-is-sidekik">
+    <h2>{copy.definitionTitle}</h2>
+    <p>{copy.definition}</p>
+  </section>
+
+  <section class="feature-section" id="features">
+    <div class="feature-grid">
+      <div class="card feature-card-tracking">
+        <span class="eyebrow">{copy.trackingEyebrow}</span>
+        <h3>{copy.trackingTitle}</h3>
+        <div class="chip-row">
+          {copy.trackingChips.map((chip) => <span class="chip">{chip}</span>)}
+        </div>
+        <div class="tracking-phones">
+          <PhonePair
+            front={trackingLive}
+            back={trackingStart}
+            frontAlt={copy.trackingFrontAlt}
+            backAlt={copy.trackingBackAlt}
+            smallBack
+            eager
+          />
+        </div>
+      </div>
+      <div class="feature-stack">
+        <div class="card card-dark">
+          <span class="eyebrow">{copy.xpEyebrow}</span>
+          <h3>{copy.xpTitle}</h3>
+          <p class="muted-on-dark">{copy.xpText}</p>
+          <div class="xp-widget">
+            <div class="xp-row">
+              <span>{copy.xpSeason}</span>
+              <span>{copy.xpScore}</span>
+            </div>
+            <div class="xp-bar">
+              <div class="xp-bar-fill"></div>
+            </div>
+            <div class="xp-row xp-row-small">
+              <span>{copy.xpLow}</span>
+              <span>{copy.xpNext}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card feature-card-segments">
+          <span class="eyebrow">{copy.segmentsEyebrow}</span>
+          <h3>{copy.segmentsTitle}</h3>
+          <p>{copy.segmentsText}</p>
+          <Image src={clubSegments} alt={copy.segmentsAlt} class="segments-shot" width={340} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="clubs-section" id="clubs">
+    <div class="card clubs-card">
+      <div class="clubs-copy">
+        <span class="eyebrow">{copy.clubsEyebrow}</span>
+        <h2>{copy.clubsTitle}</h2>
+        <p>{copy.clubsText}</p>
+        <div class="chip-row chip-row-dark">
+          {copy.clubChips.map((chip) => <span class="chip chip-dark">{chip}</span>)}
+        </div>
+        <a class="text-link" href={copy.clubsHref}>{copy.clubsLink}</a>
+      </div>
+      <div class="leaderboard-widget">
+        <div class="leaderboard-head">
+          <span class="leaderboard-title">{copy.leaderboardTitle}</span>
+          <span class="leaderboard-sub">{copy.leaderboardSub}</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="rank rank-gold">1</span>
+          <span class="rank-name">Wolfgang Raffler</span>
+          <span class="rank-score">135,00</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="rank rank-silver">2</span>
+          <span class="rank-name">Peter Lang</span>
+          <span class="rank-score">133,00</span>
+        </div>
+        <div class="leaderboard-row">
+          <span class="rank rank-bronze">3</span>
+          <span class="rank-name">Herbert Hauser</span>
+          <span class="rank-score">133,00</span>
+        </div>
+        <div class="leaderboard-row leaderboard-row-you">
+          <span class="rank rank-you">4</span>
+          <span class="rank-name">{copy.you}</span>
+          <span class="rank-score">128,00</span>
+        </div>
+        <div class="leaderboard-meta">
+          {copy.leaderboardMeta.map((item, i) => (
+            <>
+              {i > 0 && <span>·</span>}
+              <span>{item}</span>
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials-section" id="challenges">
+    <div class="testimonial-grid">
+      {copy.testimonials.map((t, i) => (
+        <figure class:list={['testimonial-card', { dark: i === 0, accent: i === 2 }]}>
+          <p>&bdquo;{t.quote}&ldquo;</p>
+          <figcaption>{t.name} · {t.role}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <h2>{copy.faqTitle}</h2>
+    <div class="faq-grid">
+      {copy.faqs.map((item, i) => (
+        <details class="faq-item" open={i === 0}>
+          <summary>
+            {item.q}
+            <span class="plus" aria-hidden="true">+</span>
+          </summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta-section full-bleed">
+    <Image src={ctaSky} alt=" " class="cta-bg" width={1024} aria-hidden="true" />
+    <div class="cta-panel">
+      <h2>{copy.ctaTitle}</h2>
+      <p>{copy.ctaText}</p>
+      <StoreBadges />
+      <p class="rating-line"><span class="star" aria-hidden="true">★</span> {ratingLine(lang)}</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .full-bleed-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 5vw, 48px);
+  }
+
+  h2 {
+    font-size: clamp(28px, 4.4vw, 38px);
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .card {
+    background: var(--color-surface);
+    border-radius: 22px;
+    padding: clamp(22px, 3vw, 30px);
+  }
+
+  .card-dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .muted-on-dark {
+    color: #9ba5b4;
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--color-ink);
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 48px);
+    padding-top: clamp(36px, 5vw, 64px);
+    padding-bottom: clamp(48px, 7vw, 80px);
+    max-width: 1240px;
+  }
+
+  .hero-relief {
+    position: absolute;
+    right: -4%;
+    top: 24px;
+    width: min(720px, 58%);
+    height: auto;
+    max-width: none;
+    opacity: 0.45;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, #000 40%, transparent 72%);
+  }
+
+  .hero-copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 14px;
+    z-index: 1;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5.2vw, 54px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .accent {
+    color: var(--color-primary);
+  }
+
+  .hero .lead {
+    font-size: clamp(16px, 2vw, 18px);
+    line-height: 1.55;
+    color: #c8c8c8;
+    margin: 0;
+    max-width: 520px;
+    text-wrap: pretty;
+  }
+
+  .download-label {
+    margin: 10px 0 0;
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .rating-line {
+    margin: 4px 0 0;
+    font-size: 15px;
+    color: #fff;
+  }
+
+  .rating-line .star {
+    color: #ffc400;
+    margin-right: 4px;
+  }
+
+  .hero-phones {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .hero-edge {
+    height: clamp(28px, 4vw, 48px);
+    background: var(--color-bg);
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Why */
+  .why {
+    position: relative;
+    z-index: 0;
+    padding-top: clamp(8px, 2vw, 16px);
+  }
+
+  .why h2 {
+    margin-bottom: 24px;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .why-card {
+    background: var(--color-surface);
+    border-radius: 18px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 4px solid var(--color-primary);
+  }
+
+  .why-index {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .why-card p {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .definition {
+    padding-top: clamp(32px, 5vw, 48px);
+    max-width: 720px;
+  }
+
+  .definition h2 {
+    margin-bottom: 16px;
+    text-transform: none;
+    font-size: clamp(24px, 3.6vw, 32px);
+  }
+
+  .definition p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-text);
+    text-wrap: pretty;
+  }
+
+  /* Features */
+  .feature-section {
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .feature-card-tracking {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    background: var(--color-bg);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .chip-dark {
+    background: var(--color-ink);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .tracking-phones {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .feature-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .feature-stack h3 {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 12px 0 0;
+  }
+
+  .card-dark h3 {
+    margin-top: 12px;
+  }
+
+  .xp-widget {
+    background: var(--color-ink-soft);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .xp-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+    color: #9ba5b4;
+  }
+
+  .xp-row-small {
+    font-size: 12px;
+    color: #6f7a8a;
+  }
+
+  .xp-bar {
+    height: 8px;
+    border-radius: 99px;
+    background: #232a35;
+    overflow: hidden;
+  }
+
+  .xp-bar-fill {
+    width: 62%;
+    height: 100%;
+    background: var(--color-primary);
+  }
+
+  .feature-card-segments {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .feature-card-segments p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--color-muted);
+  }
+
+  .segments-shot {
+    width: 100%;
+    height: auto;
+    max-width: 340px;
+    max-height: clamp(300px, 42vh, 480px);
+    object-fit: contain;
+    object-position: top;
+    align-self: center;
+    filter: drop-shadow(0 18px 28px rgba(14, 17, 22, 0.18));
+    display: block;
+    margin-top: auto;
+  }
+
+  /* Clubs */
+  .clubs-section {
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+
+  .clubs-card {
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+
+  .clubs-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .clubs-copy h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    text-wrap: balance;
+  }
+
+  .clubs-copy p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+
+  .chip-row-dark .chip-dark {
+    padding: 8px 14px;
+    border-radius: 8px;
+  }
+
+  .text-link {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-top: 4px;
+  }
+
+  .leaderboard-widget {
+    background: var(--color-ink);
+    border-radius: 18px;
+    padding: 22px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .leaderboard-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .leaderboard-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 800;
+  }
+
+  .leaderboard-sub {
+    font-size: 12px;
+    color: #6f7a8a;
+  }
+
+  .leaderboard-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: var(--color-ink-soft);
+    border-radius: 10px;
+  }
+
+  .leaderboard-row-you {
+    background: var(--color-primary);
+  }
+
+  .rank {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-ink);
+  }
+
+  .rank-gold {
+    background: #ffc400;
+  }
+
+  .rank-silver {
+    background: #c9d1db;
+  }
+
+  .rank-bronze {
+    background: #d2803c;
+  }
+
+  .rank-you {
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+  }
+
+  .rank-name {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .rank-score {
+    font-size: 14px;
+    color: #9ba5b4;
+  }
+
+  .leaderboard-row-you .rank-score {
+    color: #fff;
+  }
+
+  .leaderboard-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-top: 4px;
+    font-size: 12px;
+    color: #6f7a8a;
+  }
+
+  /* Testimonials */
+  .testimonials-section {
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .testimonial-card {
+    margin: 0;
+    background: var(--color-surface);
+    border-radius: 20px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .testimonial-card.dark {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .testimonial-card.accent {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .testimonial-card p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 500;
+    text-wrap: pretty;
+  }
+
+  .testimonial-card figcaption {
+    font-size: 13px;
+    color: #6f7a8a;
+  }
+
+  .testimonial-card.dark figcaption {
+    color: #8791a0;
+  }
+
+  .testimonial-card.accent figcaption {
+    color: #fff;
+    opacity: 0.85;
+  }
+
+  /* FAQ */
+  .faq-section {
+    padding-top: clamp(40px, 6vw, 64px);
+  }
+
+  .faq-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background: var(--color-surface);
+    border-radius: 14px;
+    padding: 20px 22px;
+  }
+
+  .faq-item summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item .plus {
+    color: var(--color-primary);
+    transition: transform 0.2s;
+    flex: 0 0 auto;
+  }
+
+  .faq-item[open] .plus {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    margin: 12px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-muted);
+  }
+
+  /* CTA */
+  .cta-section {
+    margin-top: clamp(40px, 6vw, 64px);
+    margin-bottom: 0;
+    position: relative;
+    min-height: clamp(380px, 48vw, 520px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--color-ink);
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+    z-index: 0;
+  }
+
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.4));
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .cta-panel {
+    position: relative;
+    z-index: 2;
+    background: var(--color-ink);
+    color: #fff;
+    border-radius: 24px;
+    padding: clamp(32px, 5vw, 48px) clamp(24px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    max-width: 520px;
+    margin: clamp(32px, 5vw, 56px) 20px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  }
+
+  .cta-section h2 {
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+
+  .cta-section p {
+    margin: 0;
+    font-size: 17px;
+    color: #9ba5b4;
+  }
+
+  @media (max-width: 1040px) {
+    .feature-grid,
+    .clubs-card,
+    .testimonial-grid,
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .why-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding-bottom: clamp(36px, 6vw, 56px);
+    }
+
+    .hero-relief {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: min(780px, 92vw);
+      top: 16px;
+    }
+
+    .hero-copy {
+      text-align: left;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .hero-phones {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .why-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-copy {
+      gap: 14px;
+    }
+
+    .download-label {
+      margin-top: 4px;
+    }
+  }
+</style>

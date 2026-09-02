@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { challenges } from '../../i18n/challenges';
+import type { Lang } from '../../lib/seo';
+import entfernungsanzeige from '../../assets/pages/entfernungsanzeige.png';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const copy = challenges(lang);
+---
+
+<Layout title={copy.title} description={copy.description} lang={lang} path={path}>
+  <section class="hero">
+    <h1>{copy.h1}</h1>
+    <p class="lead">{copy.lead}</p>
+  </section>
+
+  <section>
+    <h2>{copy.rulesTitle}</h2>
+
+    <h3>{copy.peaksTitle}</h3>
+    <p>{copy.peaksBody}</p>
+
+    <h3>{copy.typesTitle}</h3>
+    <ul>
+      {copy.types.map((item) => (
+        <li><strong>{item.strong}</strong>{item.rest}</li>
+      ))}
+    </ul>
+    <p>{copy.typesNote}</p>
+
+    <h3>{copy.scoringTitle}</h3>
+    <p>{copy.scoringIntro}</p>
+    <p>{copy.scoringLevels}</p>
+    <p>{copy.scoringRadius}</p>
+    <p>{copy.scoringByDifficulty}</p>
+    <ul>
+      {copy.scoringPoints.map((item) => <li>{item}</li>)}
+    </ul>
+    <p>{copy.scoringOnce}</p>
+    <p>{copy.scoringFlight}</p>
+
+    <h3>{copy.proximityTitle}</h3>
+    <p>{copy.proximitySimple}</p>
+    <p>{copy.proximityDetail}</p>
+    <p>{copy.proximitySafety}</p>
+    <Image
+      src={entfernungsanzeige}
+      alt={copy.proximityAlt}
+      loading="lazy"
+      class="section-img"
+      width={720}
+      densities={[1, 2]}
+    />
+
+    <h3>{copy.seriesTitle}</h3>
+    <p>{copy.seriesSimple}</p>
+    <p>{copy.seriesDetail}</p>
+    <p>{copy.seriesFormula}</p>
+    <p>{copy.seriesExample}</p>
+
+    <h3>{copy.exampleTitle}</h3>
+    <p>{copy.exampleIntro}</p>
+    <ul>
+      {copy.exampleItems.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>{copy.howTitle}</h2>
+    <ol>
+      {copy.howSteps.map((step) => (
+        <li><strong>{step.strong}</strong>{step.rest}</li>
+      ))}
+    </ol>
+  </section>
+
+  <section>
+    <h2>{copy.generalTitle}</h2>
+    <ul>
+      {copy.general.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2>{copy.safetyTitle}</h2>
+    {copy.safety.map((item) => <p>{item}</p>)}
+  </section>
+
+  <section class="cta-section">
+    <h2>{copy.ctaTitle}</h2>
+    <p>{copy.ctaText}</p>
+    <p><a class="cta-button" href="https://app.sidekik.cloud/signup">{copy.ctaButton}</a></p>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 3rem 0 1rem; }
+  .hero h1 { font-size: 2rem; }
+  .lead { color: var(--color-muted); font-size: 1.1rem; max-width: 680px; }
+  .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
+  .section-img { max-width: 280px; border-radius: 12px; margin-top: 1rem; }
+</style>

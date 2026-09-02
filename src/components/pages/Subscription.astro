@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { subscription } from '../../i18n/subscription';
+import type { Lang } from '../../lib/seo';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const copy = subscription(lang);
+---
+
+<Layout title={copy.title} description={copy.description} lang={lang} path={path}>
+  <section class="hero">
+    <h1>{copy.h1}</h1>
+    <p class="lead">{copy.lead}</p>
+  </section>
+
+  <section>
+    <h2>{copy.gridTitle}</h2>
+    <div class="feature-grid">
+      {copy.features.map((item) => (
+        <div>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </div>
+      ))}
+    </div>
+    <p class="muted">{copy.more}</p>
+  </section>
+
+  <section>
+    <h2>{copy.supportTitle}</h2>
+    <p>{copy.supportText}</p>
+  </section>
+
+  <section class="cta-section">
+    <h2>{copy.ctaTitle}</h2>
+    <p>{copy.ctaText}</p>
+    <p><a class="cta-button" href="https://app.sidekik.cloud/signup">{copy.ctaButton}</a></p>
+  </section>
+</Layout>
+
+<style>
+  .hero { padding: 3rem 0 1rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .lead { color: var(--color-muted); font-size: 1.1rem; }
+  .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .muted { color: var(--color-muted); font-size: 0.9rem; }
+  .cta-section { text-align: center; background: var(--color-surface); border-radius: 16px; padding: 3rem 1.5rem; }
+</style>
